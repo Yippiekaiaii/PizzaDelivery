@@ -4,15 +4,11 @@
 
    
         <h1>The home of delicious fresh baked pizzas</h1>
-
-        <% offers.forEach(offer => { %>
-            <div class="mt-4">
-                <%= offer.title %><br>
-                <%= offer.body %><br>
-                <%= offer.img %><br>
-            </div>
-        <% }); %>        
+     
       
+        <%offers.foreach((strapline){ %>
+            <h2><%= offers.strapline%></h2>
+            <% }) %>  
 
     </div>
 

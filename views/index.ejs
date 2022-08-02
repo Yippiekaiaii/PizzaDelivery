@@ -3,12 +3,24 @@
     <div class="container">
 
    
-        <h1>The home of delicious fresh baked pizzas</h1>
+        <div class="row align-items-center">
+            <div class="col">
+                <h1>The home of <strong>delicious</strong> fresh baked pizzas</h1>
+             </div>
+             <div class="col">
+                 <img src = "/img/hero.jpg" alt="Fresh Baked Pizza"   class="hero-img shadow-lg img-fluid" style="border-radius:100%;">
+            </div>
+        </div>
      
-      
-        <%offers.foreach((strapline){ %>
-            <h2><%= offers.strapline%></h2>
-            <% }) %>  
-
+        <h2>Current Offers!</h2>
+        <div class="row">
+            <div class="col-6">
+                <% offers.forEach(function(offer){ %>
+                    <h2 class="strapline"><%=offer.strapline%></h2>
+                    <h3><%=offer.message%></h3>        
+                <%})%>
+            </div>
+        </div>
+     
     </div>
 

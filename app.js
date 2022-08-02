@@ -4,11 +4,17 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 
+
+
 //Connect to mongoose DB
-const dbURI = 'mongodb+srv://Yippiekaiaii:Hullcity1@cluster0.xls3m.mongodb.net/Pizza?retryWrites=true&w=majority'
-mongoose.connect(dbURI,{useNewUrlParser: true, useUnifiedTopology:true})
+const dotenv = require('dotenv'); //allows use of .env file for environment variables
+dotenv.config()
+mongoose.connect(process.env.CONNECTIONSTRING,{useNewUrlParser: true, useUnifiedTopology:true})
     .then((result) => app.listen(5000), console.log('connected to db'))
     .catch((err) => console.log(err));
+
+//Allows access to all the different paraments from the input forms inside of our article route
+app.use(express.urlencoded({extended:true})); 
 
 //Set Express Layouts and set location of main layout
 app.use(expressLayouts);

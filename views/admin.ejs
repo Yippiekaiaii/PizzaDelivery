@@ -2,12 +2,21 @@
 
 <div class="row text-center">
     <h1>Administration</h1>
+    <p>Add New Offer</p>
 </div>
+<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+  </a>
 
+  <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="/offerlist" class="nav-link px-2 link-secondary">Offers</a></li>
+    <li><a href="/admin" class="nav-link px-2 link-dark">New Offer</a></li>
+    <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>  
+  </ul>
 
 <div class="row">
     <h4 class="mb-4">Add New Offer</h4>
-    <form action="/submitOffer" method="POST">
+    <form action="/submitOffer" enctype="multipart/form-data" method="POST">
         <div class="submitOffer-form">
            <label for="strapLine">Strap Line</label>
            <input required type="text" name="strapline" id="strapline" class="form-control"> 
@@ -16,10 +25,10 @@
            <textarea required name="message" id="message" class="form-control"> </textarea>
 
            <label for="image">Image</label>
-           <input required type="text" name="image" id="image" class="form-control"> 
+           <input required type="file" name="image" id="image" class="form-control"> 
 
             <label for="expirey">Expirey</label>
-           <input required type="date" name="expirey" id="expirey" class="form-control">
+           <input required type="date" name="expirey" id="expirey" class="form-control" accept="image/*">
            
            <button type="submit" class="btn btn-primary mt-2">Submit</button>
         </div>

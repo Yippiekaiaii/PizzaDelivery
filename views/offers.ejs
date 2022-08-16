@@ -1,0 +1,39 @@
+<div class="container">
+
+    <div class="row text-center">
+        <h1>Administration</h1>
+        <p>Edit Offers</p>
+    </div>
+
+    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/offerlist" class="nav-link px-2 link-secondary">Offers</a></li>
+        <li><a href="/admin" class="nav-link px-2 link-dark">New Offer</a></li>
+        <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>      
+      </ul>
+
+      
+    <div class="row" >
+            <% offers.forEach(function(offer){ %>               
+                    <div class="col-6">
+                        <p class="strapline"><%=offer.strapline%></p>
+                        <p><%=offer.message%></p> 
+                        <p><%=offer.expirey%></p>
+                    </div>
+                    <div class="col-4">
+                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg" height="100px">  
+                    </div>
+                    <div class="col-2">
+                         <button class="btn btn-primary mt-2">Edit</button>
+                        <form action="/deleteOffer/<%= offer.id %>" enctype="multipart/form-data" method="POST">
+                            <button type="Delete" class="btn btn-primary mt-2">Delete</button>
+                        </form>
+                    </div>
+            <% })%>
+    </div>
+
+  
+
+</div>

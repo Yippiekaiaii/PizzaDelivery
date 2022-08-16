@@ -14,12 +14,18 @@
      
         <h2>Current Offers!</h2>
         <div class="row">
-            <div class="col-6">
+                
                 <% offers.forEach(function(offer){ %>
-                    <h2 class="strapline"><%=offer.strapline%></h2>
-                    <h3><%=offer.message%></h3>        
-                <%})%>
-            </div>
+                    <div class="col-6">
+                        <h2 class="strapline"><%=offer.strapline%></h2>
+                        <h3><%=offer.message%></h3> 
+                        <p>Offer valid until:<%=offer.expirey%></p>
+                    </div>
+                    <div class="col-6">
+                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg" height="300px">  
+                    </div>
+                <% })%>
+                
         </div>
      
     </div>

@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row text-center">
+        <h1>Administration</h1>
+        <p>Edit Menu</p>
+    </div>
+    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+    
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="/offerlist" class="nav-link px-2 link-secondary">Offers</a></li>
+        <li><a href="/admin" class="nav-link px-2 link-dark">New Offer</a></li>
+        <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>  
+      </ul>
+
+<button class="btn btn-primary mt-2">New</button>
+
+<!--New Menu Item Start-->
+<div class="row">
+    <form action="/submitMenuItem" enctype="multipart/form-data" method="POST">
+        <div class="submitMenuItem-form">
+            <label for="name">Name</label>
+            <input required type="text" name="name" id="name" class="form-control"> 
+            
+            <label for="description">Description</label>
+            <textarea required name="description" id="description" class="form-control"> </textarea>
+ 
+            <label for="vegitarian">Vegitarian</label>
+            <input class="checkbox" type="checkbox" name="vegitarian" id="vegitarian" class="form-control"> 
+
+            <label for="vegan">Vegan</label>
+            <input class="checkbox" type="checkbox" name="vegan" id="vegan" class="form-control"> 
+ 
+            <label for="price">Price</label>
+            <input required type="text" name="price" id="price" class="form-control">
+
+            <label for="image">Image</label>
+            <input required type="file" name="image" id="image" class="form-control"> 
+            
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+         </div>
+    </form>
+</div>
+
+<!--Menu Item List Start-->
+<h3>Current Menu Items</h3>
+<div class="row">
+    <div class="col-4">
+        Text
+    </div>
+    <div class="col-4">
+        Image
+    </div>
+    <div class="col-4">
+        Buttons
+    </div>
+
+</div>
+
+</div>

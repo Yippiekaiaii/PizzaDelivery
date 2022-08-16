@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 
 
 
@@ -15,6 +16,9 @@ mongoose.connect(process.env.CONNECTIONSTRING,{useNewUrlParser: true, useUnified
 
 //Allows access to all the different paraments from the input forms inside of our article route
 app.use(express.urlencoded({extended:true})); 
+
+//Allows us to use express to upload the images for new offers
+app.use(fileUpload());
 
 //Set Express Layouts and set location of main layout
 app.use(expressLayouts);

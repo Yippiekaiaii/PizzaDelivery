@@ -13,6 +13,10 @@ body{
 }
 
 .strapline{
-
     color:rgba(60, 121, 233, 0.897);
+}
+
+.offerImage{
+    border-radius: 10%;
+    
 }

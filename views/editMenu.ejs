@@ -45,15 +45,22 @@
 <!--Menu Item List Start-->
 <h3>Current Menu Items</h3>
 <div class="row">
-    <div class="col-4">
-        Text
-    </div>
-    <div class="col-4">
-        Image
-    </div>
-    <div class="col-4">
-        Buttons
-    </div>
+    <% menuItems.forEach(function(menuItems){ %>  
+        <div class="col-4">           
+            <p>Name: <%=menuItems.name %></p> 
+            <p>Description: <%=menuItems.description %></p>   
+            <p>Vegitarian:<%=menuItems.vegitarian %></p> 
+            <p>Vegan: <%=menuItems.vegan %></p> 
+            <p>Price: <%=menuItems.price %></p> 
+        </div>
+        <div class="col-4">
+            Image
+        </div>
+        <div class="col-4">           
+            <button class="btn btn-primary mt-2">Edit</button>
+            <button class="btn btn-primary mt-2">Delete</button>
+        </div>
+    <% })%>
 
 </div>
 

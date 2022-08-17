@@ -5,8 +5,6 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 
-
-
 //Connect to mongoose DB
 const dotenv = require('dotenv'); //allows use of .env file for environment variables
 dotenv.config()

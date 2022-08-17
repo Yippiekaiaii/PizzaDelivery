@@ -101,8 +101,8 @@ exports.menu = async (req,res) => {
 //GET editMenu
 exports.editMenu = async (req,res) => {
     try{
-
-        res.render('editMenu');
+        const menuItems = await MenuItem.find({});   
+        res.render('editMenu',{title:'Edit Menu', menuItems});
     }  catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 

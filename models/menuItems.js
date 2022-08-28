@@ -22,6 +22,11 @@ const menuItemSchema = new Schema ({
         type:Number,
         required:true,        
     },
+    category:{
+        type:String,
+        enum:['Pizza','Garlic Bread','Sides','Drinks','Misc'],
+        required:true,        
+    },
     image:{
         type:String,
         required:true,        

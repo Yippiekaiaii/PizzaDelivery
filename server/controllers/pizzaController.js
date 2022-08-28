@@ -1,5 +1,6 @@
 const Offer = require('../../models/offers.js');
 const MenuItem = require('../../models/menuItems');
+let Cart = require('../../models/cart');
 
 
 //GET "/"
@@ -89,8 +90,11 @@ exports.deleteOffer = async (req,res)=>{
 //GET /menu
 exports.menu = async (req,res) => {
     try{
-
-        res.render('menu');
+        const menuItemsPizza = await MenuItem.find({'category':'Pizza'});
+        const menuItemsGarlic = await MenuItem.find({'category':'Garlic Bread'});
+        const menuItemsSides = await MenuItem.find({'category':'Sides'});
+        const menuItemsDrinks = await MenuItem.find({'category':'Drinks'});
+        res.render('menu',{title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks});
     }  catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 
@@ -136,6 +140,7 @@ exports.submitMenuItem = async (req,res)=>{
         const newMenuItem = new MenuItem({
             name: req.body.name,
             description: req.body.description,
+            category: req.body.category,
             vegitarian: vegitarianState,
             vegan: veganState,
             price: req.body.price,
@@ -144,7 +149,10 @@ exports.submitMenuItem = async (req,res)=>{
 
         await newMenuItem.save()   
         .then((result)=>{  
-            res.render('editMenu');
+            const menuItems = MenuItem.find({});  
+            console.log(menuItems); 
+            res.render('editMenu',{title:'Edit Menu', menuItems});
+           
          })
         .catch((err)=>{
             console.log(err);
@@ -156,3 +164,69 @@ exports.submitMenuItem = async (req,res)=>{
         res.status(500).send({message: error.message||"Error Occured"}); 
     }  
 }
+
+//GET /cart
+exports.cart = async(req,res)=>{
+
+    if (!req.session.cart){       
+           res.render('cart', {products:null});
+            console.log("No cart found");       
+    } 
+    let cart = new Cart(req.session.cart);
+    console.log(cart);
+    res.render('cart', {products: cart.generateArray(), totalPrice: cart.totalPrice}); 
+  //res.render('cart'); 
+}
+
+//POST /addToCart/:id
+exports.addToCart = async(req,res) =>{  
+    try{    
+
+        if (!req.session.viewCount==1){
+            req.session.viewCount = 1;
+        } else { 
+            req.session.viewCount +=1;
+            console.log(req.session.viewCount, req.sessionID);
+        }
+        
+        console.log("body=",req.body," session id=",req.sessionID, " params=",req.params);       
+          
+        try {
+        //See functions in cart.js in models folder 
+        let productId = req.params.id;
+        let cart = new Cart(req.session.cart ? req.session.cart : {items: {}}); //checks if the session cart alread exists, if not it passes and empty JS object        
+                
+        MenuItem.findById(productId,function(err,product){           
+           if (err) {
+               return res.redirect('/menu');
+           }                         
+               cart.add(product,product.id);           
+               req.session.cart = cart;            
+               console.log(req.session.cart);               
+           })       
+        } catch (error){
+            console.log(error);
+            res.status(500).send({message: error.message||"Error Occured"}); 
+        }
+
+        //reload the page after items added to cart
+        const menuItemsPizza = await MenuItem.find({'category':'Pizza'});
+        const menuItemsGarlic = await MenuItem.find({'category':'Garlic Bread'});
+        const menuItemsSides = await MenuItem.find({'category':'Sides'});
+        const menuItemsDrinks = await MenuItem.find({'category':'Drinks'});
+        res.render('menu',{title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks});
+        console.log("Item Added to Basket");
+        
+    }  catch (error){
+        console.log(error);
+        res.status(500).send({message: error.message||"Error Occured"}); 
+    } 
+}
+
+
+//GET /about
+exports.about = async(req,res)=>{    
+           res.render('about');             
+   
+}
+

@@ -4,13 +4,30 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const session = require('express-session');
+const mongostore = require('connect-mongo');
+
+
 
 //Connect to mongoose DB
 const dotenv = require('dotenv'); //allows use of .env file for environment variables
 dotenv.config()
-mongoose.connect(process.env.CONNECTIONSTRING,{useNewUrlParser: true, useUnifiedTopology:true})
+
+//Connection String
+const connectString = process.env.CONNECTIONSTRING;
+
+//Connect to mongoDB database
+mongoose.connect(connectString,{useNewUrlParser: true, useUnifiedTopology:true})
     .then((result) => app.listen(5000), console.log('connected to db'))
     .catch((err) => console.log(err));
+
+//Set express-session to handle user session
+app.use(session({
+    secret:'secret-key',
+    resave:false,
+    saveUninitialized:false,      
+    cookie: {maxAge: 60*60*1000} //60 mins - adjust first figure to adjust session expirey in mins
+}));
 
 //Allows access to all the different paraments from the input forms inside of our article route
 app.use(express.urlencoded({extended:true})); 

@@ -1,5 +1,75 @@
 <div class="container">
-    Menu Page
+    
+    <header>
+        <h1>Menu</h1>
+        
+        <p>When you see these icons
+            <img src="/img/vegicon.png" class="vegicon" alt="Vegitarian"> Vegitarian 
+            <img src="/img/veganicon.png" class="vegicon" alt="Vegan"> Vegan
+        </p>
+    </header>
 
+    <h3>Pizzas</h3>
+    <div class="row">
+        
+        <% menuItemsPizza.forEach(function(menuItemsPizza){ %>                
+                <h4><%=menuItemsPizza.name %></h4>           
+            <div class="col-6">
+                <p><%=menuItemsPizza.description %></p>
 
+                <% if (menuItemsPizza.vegan == true) { %>
+                <img src="/img/veganicon.png" class="vegicon" alt="Vegan">                
+                <% } %>
+
+                <% if (menuItemsPizza.vegitarian == true) { %>
+                <img src="/img/vegicon.png" class="vegicon" alt="Vegitarian">              
+                <% } %>
+            </div>
+            <div class="col-2">
+                <p>£<%=menuItemsPizza.price %></p>               
+            </div>
+            <div class="col-2">
+                <p><%=menuItemsPizza.image %></p>
+            </div>
+            <div class="col-2">
+                <form action="/addToCart/<%=menuItemsPizza.id %>/<%=menuItemsPizza.name %>/<%=menuItemsPizza.price %>" method="POST">   
+                    <label for="qty">Qty</label>
+                    <input type="text" name="qty" id="qty">
+                    <button class="btn btn-primary mt-2">Add</button>
+                </form>
+            </div> 
+        <% }) %>
+
+    </div>
+
+        <h3>Garlic Bread</h3>
+        <% menuItemsGarlic.forEach(function(menuItemsGarlic){ %>
+                <h4><%=menuItemsGarlic.name %></h4>
+                <p><%=menuItemsGarlic.description %></p>
+                <p><%=menuItemsGarlic.vegan %></p>
+                <p><%=menuItemsGarlic.vegitarian %></p>
+                <p>£<%=menuItemsGarlic.price %></p>
+                <p><%=menuItemsGarlic.image %></p>
+        <% }) %>
+
+        <h3>Sides</h3>
+        <% menuItemsSides.forEach(function(menuItemsSides){ %>
+                <h4><%=menuItemsSides.name %></h4>
+                <p><%=menuItemsSides.description %></p>
+                <p><%=menuItemsSides.vegan %></p>
+                <p><%=menuItemsSides.vegitarian %></p>
+                <p>£<%=menuItemsSides.price %></p>
+                <p><%=menuItemsSides.image %></p>
+        <% }) %>
+
+        <h3>Drinks</h3>
+        <% menuItemsDrinks.forEach(function(menuItemsDrinks){ %>
+                <h4><%=menuItemsDrinks.name %></h4>
+                <p><%=menuItemsDrinks.description %></p>
+                <p><%=menuItemsDrinks.vegan %></p>
+                <p><%=menuItemsDrinks.vegitarian %></p>
+                <p>£<%=menuItemsDrinks.price %></p>
+                <p><%=menuItemsDrinks.image %></p>
+        <% }) %>  
 </div>
+

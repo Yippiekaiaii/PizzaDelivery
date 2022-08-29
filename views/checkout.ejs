@@ -1,21 +1,30 @@
 Check Out
 
-<p>Total to Pay: £<%=total%></p>
+<p>Total to Pay: £<%=total%></p> 
 
-<form action="#" method="POST">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name">
-    <label for="address">Address</label>
-    <input type="text" name="address" id="address">
-    <label for="holdername">Card Holder Name</label>
-    <input type="text" name="holdername" id="holdername">
-    <label for="cardno">Card Number</label>
-    <input type="text" name="cardno" id="cardno">
-    <label for="expirymonth">Expiry Month</label>
-    <input type="text" name="expirymonth" id="expirymonth">
-    <label for="expiryyear">Expiry Year</label>
-    <input type="text" name="expiryyear" id="expiryyear">
-    <label for="cvc">Expiry CVC</label>
-    <input type="text" name="cvc" id="cvc">
-    <button class="btn btn-primary mt-2">Pay Now</button>
-</form>
+<form action="#" method="POST" id="checkout-form">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+      
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" required>
+        <label for="holdername">Card Holder Name</label>
+        <input type="text" name="holdername" id="holdername" required>
+        <label for="cardno">Card Number</label>
+        <input type="text" name="cardno" id="cardno" required>
+        <label for="expirymonth">Expiry Month</label>
+        <input type="text" name="expirymonth" id="expirymonth" required>
+        <label for="expiryyear">Expiry Year</label>
+        <input type="text" name="expiryyear" id="expiryyear" required>
+        <label for="cvc">Expiry CVC</label>
+        <input type="text" name="cvc" id="cvc" required>
+        <button class="btn btn-primary mt-2">Pay Now</button>
+    </div>
+</form> 
+
+<script src="https://js.stripe.com/v3/"></script>
+<script type="text/javascript" src="/js/checkout.js"></script>
+

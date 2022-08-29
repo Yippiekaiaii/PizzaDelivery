@@ -5,12 +5,9 @@ let Cart = require('../../models/cart');
 
 //GET "/"
 exports.homepage = async (req,res)=>{
-    try{     
-
+    try{   
      const offers = await Offer.find({});
-       
-       res.render('index',{title:'Home Page', offers});
-
+     res.render('index',{title:'Home Page', offers});
     } catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 

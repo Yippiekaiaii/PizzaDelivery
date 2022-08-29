@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const session = require('express-session');
 const mongostore = require('connect-mongo');
-
-
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser')
 
 //Connect to mongoose DB
 const dotenv = require('dotenv'); //allows use of .env file for environment variables
@@ -41,6 +41,10 @@ app.set('layout','./layouts/main.ejs');
 
 //Set ejs as the view engine
 app.set('view engine', 'ejs');
+
+//Cookie Parser middleware
+app.use(cookieParser());
+
 
 //Set location for static Assets
 app.use(express.static('public')); 

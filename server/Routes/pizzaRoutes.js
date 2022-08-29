@@ -2,6 +2,12 @@ const express = require ('express');
 const router = express.Router();
 const pizzaController = require("../controllers/pizzaController.js");
 const checkOutController = require("../controllers/checkOutController.js");
+const userController = require("../controllers/userController.js");
+
+//Add csurf for CSRF proection 
+const csrf = require("csurf");
+let csrfProtection = csrf();
+router.use(csrfProtection);
 
 //Routes
 router.get('/', pizzaController.homepage);
@@ -16,5 +22,6 @@ router.get('/cart',pizzaController.cart);
 router.post('/addToCart/:id/:name/:price',pizzaController.addToCart);
 router.get('/about', pizzaController.about);
 router.get('/checkout', checkOutController.checkout);
+router.get('/signup', userController.signup)
 
 module.exports=router;

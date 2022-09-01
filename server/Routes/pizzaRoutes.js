@@ -22,6 +22,9 @@ router.get('/cart',pizzaController.cart);
 router.post('/addToCart/:id/:name/:price',pizzaController.addToCart);
 router.get('/about', pizzaController.about);
 router.get('/checkout', checkOutController.checkout);
-router.get('/signup', userController.signup)
+router.get('/signup', userController.signup);
+router.post('/signup', userController.signupSubmit);
+router.get('/signin', userController.signin);
+router.get('/profile',userController.profile);
 
 module.exports=router;

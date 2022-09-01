@@ -8,6 +8,9 @@ const session = require('express-session');
 const mongostore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser')
+const passport = require('passport');
+const flash = require('connect-flash');
+
 
 //Connect to mongoose DB
 const dotenv = require('dotenv'); //allows use of .env file for environment variables
@@ -21,6 +24,8 @@ mongoose.connect(connectString,{useNewUrlParser: true, useUnifiedTopology:true})
     .then((result) => app.listen(5000), console.log('connected to db'))
     .catch((err) => console.log(err));
 
+require('./config/passport.js'); //run the passport setup script
+
 //Set express-session to handle user session
 app.use(session({
     secret:'secret-key',
@@ -28,6 +33,13 @@ app.use(session({
     saveUninitialized:false,      
     cookie: {maxAge: 60*60*1000} //60 mins - adjust first figure to adjust session expirey in mins
 }));
+
+//Initialise Flash Messages (uses session so must be after it)
+app.use(flash());
+
+//Initialise Passport to handle user login and then set it to use the session middleware(uses session so must be after it)
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Allows access to all the different paraments from the input forms inside of our article route
 app.use(express.urlencoded({extended:true})); 

@@ -3,6 +3,8 @@ const router = express.Router();
 const pizzaController = require("../controllers/pizzaController.js");
 const checkOutController = require("../controllers/checkOutController.js");
 const userController = require("../controllers/userController.js");
+const passport = require("passport");
+
 
 //Add csurf for CSRF proection 
 const csrf = require("csurf");
@@ -24,7 +26,32 @@ router.get('/about', pizzaController.about);
 router.get('/checkout', checkOutController.checkout);
 router.get('/signup', userController.signup);
 router.post('/signup', userController.signupSubmit);
-router.get('/signin', userController.signin);
-router.get('/profile',userController.profile);
+router.get('/signin', notLoggedIn,userController.signin);
+router.post('/signin',notLoggedIn,userController.signinSubmit);
+router.get('/profile',isLoggedIn,userController.profile);
+router.get('/logout',userController.logout);
 
 module.exports=router;
+
+
+//Function to protect a route if the user is not logged in
+function isLoggedIn(req,res,next){
+    console.log('Test for logged in status...')
+    if (req.isAuthenticated()) {
+        console.log('user is NOT logged in');
+        return next();
+    }
+    console.log('user is logged in - redirecting to home')
+    res.redirect('/');
+}
+
+//Function to protect a route if the user IS logged in
+function notLoggedIn(req,res,next){
+    console.log('Test for logged in status...')
+    if (!req.isAuthenticated()) {
+        console.log('user is NOT logged in');
+        return next();
+    }
+    console.log('user is logged in - redirecting to home')
+    res.redirect('/');
+}

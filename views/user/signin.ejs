@@ -2,8 +2,16 @@
 
 <div class="col-md-4 col-md-offset-4">
     <h1>Sign In</h1>
-    Validation Errors
-    <form action="/signup" method="POST">   
+   
+    <%if(hasErrors){%>
+        <div class="alert alert-danger">
+            <%messages.forEach(function(messages){ %>
+                <p><%=messages%></p>
+            <%})%>
+        </div>
+    <%}%>
+
+    <form action="/signin" method="POST">   
         <div class="form-group">
             <label for="email">E-mail</label>
             <input type="text" id="email" name="email" class="form-control" required>

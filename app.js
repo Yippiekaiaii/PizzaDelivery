@@ -21,7 +21,7 @@ const connectString = process.env.CONNECTIONSTRING;
 
 //Connect to mongoDB database
 mongoose.connect(connectString,{useNewUrlParser: true, useUnifiedTopology:true})
-    .then((result) => app.listen(5000), console.log('connected to db'))
+    .then((result) => app.listen(5000), console.log('Listening on port 5000 and connected to mongodb'))
     .catch((err) => console.log(err));
 
 require('./config/passport.js'); //run the passport setup script
@@ -40,6 +40,12 @@ app.use(flash());
 //Initialise Passport to handle user login and then set it to use the session middleware(uses session so must be after it)
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Middleware to make the isAuthenticated method be available to all views
+app.use(function(req,res,next){
+    res.locals.login = req.isAuthenticated(); //login is the variable it is assigned to and will be either true or false depending on passport login state
+    next();
+})
 
 //Allows access to all the different paraments from the input forms inside of our article route
 app.use(express.urlencoded({extended:true})); 

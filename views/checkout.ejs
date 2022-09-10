@@ -2,7 +2,7 @@ Check Out
 
 <p>Total to Pay: £<%=total%></p> 
 
-<form action="#" method="POST" id="checkout-form">
+<form action="/checkout" method="POST" id="checkout-form">
     <div class="row justify-content-center">
         <div class="col-6">
             <label for="name">Name</label>
@@ -21,6 +21,7 @@ Check Out
         <input type="text" name="expiryyear" id="expiryyear" required>
         <label for="cvc">Expiry CVC</label>
         <input type="text" name="cvc" id="cvc" required>
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
         <button class="btn btn-primary mt-2">Pay Now</button>
     </div>
 </form> 

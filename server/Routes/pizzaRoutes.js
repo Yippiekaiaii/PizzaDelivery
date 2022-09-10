@@ -3,6 +3,7 @@ const router = express.Router();
 const pizzaController = require("../controllers/pizzaController.js");
 const checkOutController = require("../controllers/checkOutController.js");
 const userController = require("../controllers/userController.js");
+const ordersController = require("../controllers/ordersController.js");
 const passport = require("passport");
 
 
@@ -29,29 +30,30 @@ router.post('/signup', userController.signupSubmit);
 router.get('/signin', notLoggedIn,userController.signin);
 router.post('/signin',notLoggedIn,userController.signinSubmit);
 router.get('/profile',isLoggedIn,userController.profile);
-router.get('/logout',userController.logout);
+router.get('/logout',isLoggedIn,userController.logout);
+router.post('/checkout',isLoggedIn,ordersController.checkout)
 
 module.exports=router;
 
 
 //Function to protect a route if the user is not logged in
 function isLoggedIn(req,res,next){
-    console.log('Test for logged in status...')
+    console.log('Verify logged in status...')
     if (req.isAuthenticated()) {
-        console.log('user is NOT logged in');
+        console.log('user is logged in');
         return next();
     }
-    console.log('user is logged in - redirecting to home')
+    console.log('user is NOT logged in - redirecting to home')
     res.redirect('/');
 }
 
 //Function to protect a route if the user IS logged in
 function notLoggedIn(req,res,next){
-    console.log('Test for logged in status...')
+    console.log('Verify logged Out status...')
     if (!req.isAuthenticated()) {
         console.log('user is NOT logged in');
         return next();
     }
-    console.log('user is logged in - redirecting to home')
+    console.log('user is logged in - redirecting')
     res.redirect('/');
 }

@@ -1,1 +1,40 @@
-Profile
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>User Profile</h1>
+        <hr>                  
+    </div>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h5>Name</h5>
+        <p>address</p>
+        <p><%=user.email%></p>          
+        <button class="btn btn-primary">change password</button>
+        <hr>                  
+    </div>
+
+    <div class="row">
+        <h2>My Orders</h2>  
+        <% orders.forEach(function(orders){ %> 
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title"><%=orders.name%></h5>
+                <p class="card-text"><%=orders.address%></p>
+                </div>
+
+                <ul class="list-group list-group-flush">            
+                    <li class="list-group-item"><%=orders.cart%></li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>            
+                </ul>
+
+                <div class="card-body">
+                <a href="#" class="card-link">Cancel Order</a>
+                <a href="#" class="card-link">Amend Order</a>
+                </div>
+            </div>
+        <%})%>
+    </div>
+</div>

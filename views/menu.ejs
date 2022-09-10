@@ -29,12 +29,13 @@
                 <p>£<%=menuItemsPizza.price %></p>               
             </div>
             <div class="col-2">
-                <p><%=menuItemsPizza.image %></p>
+                <img src="/uploads/<%=menuItemsPizza.image %>" alt="<%=menuItemsPizza.name %>" width="150px">
             </div>
             <div class="col-2">
                 <form action="/addToCart/<%=menuItemsPizza.id %>/<%=menuItemsPizza.name %>/<%=menuItemsPizza.price %>" method="POST">   
                     <label for="qty">Qty</label>
                     <input type="text" name="qty" id="qty">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
                     <button class="btn btn-primary mt-2">Add</button>
                 </form>
             </div> 

@@ -28,6 +28,7 @@
                     <div class="col-2">
                          <button class="btn btn-primary mt-2">Edit</button>
                         <form action="/deleteOffer/<%= offer.id %>" enctype="multipart/form-data" method="POST">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
                             <button type="Delete" class="btn btn-primary mt-2">Delete</button>
                         </form>
                     </div>

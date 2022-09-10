@@ -1,5 +1,6 @@
 const passport = require("passport");
-
+let Order = require('../../models/order');
+let Cart = require('../../models/cart');
 
 //GET /signin
 exports.signin = async (req,res)=>{
@@ -50,14 +51,14 @@ exports.signupSubmit =
     })
 
 //GET /profile
-exports.profile = async (req,res)=>{
-    //isLoggedIn()
-    try{   
-     res.render('user/profile', { csrfToken: req.csrfToken() });   
-    } catch (error){
-        console.log(error);
-        res.status(500).send({message: error.message||"Error Occured"}); 
-    }
+exports.profile = async (req,res)=>{  
+   
+    const orders = await Order.find({user: req.user})
+    
+    res.render('user/profile',{orders:orders,csrfToken: req.csrfToken()});
+    
+  
+   
 }
 
 

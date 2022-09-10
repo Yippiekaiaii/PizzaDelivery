@@ -10,7 +10,7 @@ exports.checkout = async (req,res)=>{
     }
     try{  
         let cart = new Cart(req.session.cart);
-        res.render('checkout', {total: cart.totalPrice});
+        res.render('checkout', {total: cart.totalPrice,csrfToken: req.csrfToken()});
      } catch (error){
          console.log(error);
          res.status(500).send({message: error.message||"Error Occured"}); 

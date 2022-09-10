@@ -17,7 +17,7 @@ exports.homepage = async (req,res)=>{
 //GET "/admin"
 exports.admin = async(req,res)=>{
 
-    res.render('admin.ejs');
+    res.render('admin.ejs',{csrfToken: req.csrfToken()});
 }
 
 //POST "/submitOffer"
@@ -62,7 +62,7 @@ exports.offerlist = async (req,res)=>{
   
     try{  
         const offers = await Offer.find({});          
-          res.render('offers',{title:'Edit Offers', offers});   
+          res.render('offers',{title:'Edit Offers', offers,csrfToken: req.csrfToken()});   
        } catch (error){
            console.log(error);
            res.status(500).send({message: error.message||"Error Occured"}); 
@@ -77,7 +77,7 @@ exports.deleteOffer = async (req,res)=>{
         console.log("Delete ID:", deleteID);
     
         const offers = await Offer.find({});   
-        res.render('offers',{title:'Edit Offers', offers}); 
+        res.render('offers',{title:'Edit Offers', offers,csrfToken: req.csrfToken()}); 
     }  catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 
@@ -91,7 +91,7 @@ exports.menu = async (req,res) => {
         const menuItemsGarlic = await MenuItem.find({'category':'Garlic Bread'});
         const menuItemsSides = await MenuItem.find({'category':'Sides'});
         const menuItemsDrinks = await MenuItem.find({'category':'Drinks'});
-        res.render('menu',{title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks});
+        res.render('menu',{csrfToken: req.csrfToken(),title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks});
     }  catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 
@@ -103,7 +103,7 @@ exports.menu = async (req,res) => {
 exports.editMenu = async (req,res) => {
     try{
         const menuItems = await MenuItem.find({});   
-        res.render('editMenu',{title:'Edit Menu', menuItems});
+        res.render('editMenu',{title:'Edit Menu', menuItems,csrfToken: req.csrfToken()});
     }  catch (error){
         console.log(error);
         res.status(500).send({message: error.message||"Error Occured"}); 
@@ -120,6 +120,17 @@ exports.submitMenuItem = async (req,res)=>{
 
         imageUploadFile = req.files.image;
         newImageName = Date.now() + imageUploadFile.name;
+        uploadPath = require('path').resolve('./') + '/public/uploads/'+ newImageName;
+        if (!req.files || Object.keys(req.files).length === 0){
+            console.log("Error uploading image");
+        }else{
+            imageUploadFile = req.files.image;
+            newImageName = Date.now() + imageUploadFile.name;
+            uploadPath = require('path').resolve('./') + '/public/uploads/'+ newImageName;
+            imageUploadFile.mv(uploadPath, function(err){
+                if (err) return res.status(500).send(err);
+            })
+        };
 
         let veganState = req.body.vegan;
         let vegitarianState = req.body.vegitarian;        
@@ -147,10 +158,11 @@ exports.submitMenuItem = async (req,res)=>{
         await newMenuItem.save()   
         .then((result)=>{  
             const menuItems = MenuItem.find({});  
-            console.log(menuItems); 
-            res.render('editMenu',{title:'Edit Menu', menuItems});
-           
+            //console.log(menuItems); 
+            //res.redirect('editMenu',{csrfToken: req.csrfToken(),title:'Edit Menu', menuItems});
+            res.redirect('/editMenu');
          })
+
         .catch((err)=>{
             console.log(err);
             res.status(500).send({message: err.message||"Error Occured"});
@@ -166,12 +178,12 @@ exports.submitMenuItem = async (req,res)=>{
 exports.cart = async(req,res)=>{
 
     if (!req.session.cart){       
-           res.render('cart', {products:null});
+           res.render('cart', {csrfToken: req.csrfToken(),products:null});
             console.log("No cart found");       
     } 
     let cart = new Cart(req.session.cart);
     console.log(cart);
-    res.render('cart', {products: cart.generateArray(), totalPrice: cart.totalPrice}); 
+    res.render('cart', {csrfToken: req.csrfToken(),products: cart.generateArray(), totalPrice: cart.totalPrice}); 
   //res.render('cart'); 
 }
 
@@ -195,11 +207,11 @@ exports.addToCart = async(req,res) =>{
                 
         MenuItem.findById(productId,function(err,product){           
            if (err) {
-               return res.redirect('/menu');
+               return res.redirect('/menu',{csrfToken: req.csrfToken()});
            }                         
                cart.add(product,product.id);           
-               req.session.cart = cart;            
-               console.log(req.session.cart);               
+               req.session.cart = cart;           
+                           
            })       
         } catch (error){
             console.log(error);
@@ -211,7 +223,8 @@ exports.addToCart = async(req,res) =>{
         const menuItemsGarlic = await MenuItem.find({'category':'Garlic Bread'});
         const menuItemsSides = await MenuItem.find({'category':'Sides'});
         const menuItemsDrinks = await MenuItem.find({'category':'Drinks'});
-        res.render('menu',{title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks});
+        res.redirect('/menu');
+        //res.render('menu',{title:'Menu',menuItemsPizza,menuItemsGarlic,menuItemsSides,menuItemsDrinks,csrfToken: req.csrfToken()});
         console.log("Item Added to Basket");
         
     }  catch (error){
@@ -223,6 +236,9 @@ exports.addToCart = async(req,res) =>{
 
 //GET /about
 exports.about = async(req,res)=>{    
+        console.log(req.session.user);
+        let cart = new Cart(req.session.cart);
+        console.log(cart.totalQty);
            res.render('about');             
    
 }

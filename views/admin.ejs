@@ -29,7 +29,7 @@
 
             <label for="expirey">Expirey</label>
            <input required type="date" name="expirey" id="expirey" class="form-control" accept="image/*">
-           
+           <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
            <button type="submit" class="btn btn-primary mt-2">Submit</button>
         </div>
 

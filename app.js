@@ -47,6 +47,24 @@ app.use(function(req,res,next){
     next();
 })
 
+//Expose Session User name to all Views
+app.use(function(req,res,next){  
+    res.locals.user = req.user;
+   next();
+})
+
+//Expose Current Basket Qty to all views
+app.use(function(req,res,next){    
+    let cart = (req.session.cart);
+    if(cart){
+    res.locals.basketQty = cart.totalQty;
+    } else {
+        res.locals.basketQty = 0;
+    }
+    next();
+})
+
+
 //Allows access to all the different paraments from the input forms inside of our article route
 app.use(express.urlencoded({extended:true})); 
 

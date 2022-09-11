@@ -25,9 +25,11 @@
                 </div>
 
                 <ul class="list-group list-group-flush">            
-                    <li class="list-group-item"><%=orders.cart%></li>
-                    <li class="list-group-item">A second item</li>
-                    <li class="list-group-item">A third item</li>            
+                    <li class="list-group-item">Total Items: <%=orders.cart.totalQty%></li>
+                    <li class="list-group-item">Total Price: £<%=orders.cart.totalPrice%></li>
+                    <%items.forEach(function(items){%>
+                    <li class="list-group-item"><span class="badge bg-primary"><%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li>  
+                    <%})%>    
                 </ul>
 
                 <div class="card-body">

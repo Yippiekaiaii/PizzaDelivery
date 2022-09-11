@@ -10,6 +10,7 @@
     </header>
 
     <h3>Pizzas</h3>
+    <hr>
     <div class="row">
         
         <% menuItemsPizza.forEach(function(menuItemsPizza){ %>                
@@ -34,13 +35,13 @@
             <div class="col-2">
                 <form action="/addToCart/<%=menuItemsPizza.id %>/<%=menuItemsPizza.name %>/<%=menuItemsPizza.price %>" method="POST">   
                     <label for="qty">Qty</label>
-                    <input type="text" name="qty" id="qty">
+                    <input type="text" name="qty" id="qty" style="width: 4rem;">
                     <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
                     <button class="btn btn-primary mt-2">Add</button>
-                </form>
+                </form>                
             </div> 
         <% }) %>
-
+       
     </div>
 
         <h3>Garlic Bread</h3>

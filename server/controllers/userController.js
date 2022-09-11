@@ -54,8 +54,18 @@ exports.signupSubmit =
 exports.profile = async (req,res)=>{  
    
     const orders = await Order.find({user: req.user})
-    
-    res.render('user/profile',{orders:orders,csrfToken: req.csrfToken()});
+    const orderCart = orders.cart;
+    console.log(orderCart)
+
+    let cart;
+    let orderItems;
+    orders.forEach(function(orders){
+        cart = new Cart(orders.cart);
+        orderItems = cart.generateArray();
+        
+    });
+    console.log(orderItems);
+    res.render('user/profile',{orders:orders,csrfToken: req.csrfToken(), items:orderItems});
     
   
    

@@ -236,9 +236,7 @@ exports.addToCart = async(req,res) =>{
 
 //GET /about
 exports.about = async(req,res)=>{    
-        console.log(req.session.user);
-        let cart = new Cart(req.session.cart);
-        console.log(cart.totalQty);
+ 
            res.render('about');             
    
 }

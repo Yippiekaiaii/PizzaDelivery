@@ -182,9 +182,10 @@ exports.cart = async(req,res)=>{
             console.log("No cart found");       
     } 
     let cart = new Cart(req.session.cart);
-    console.log(cart);
+    //console.log(cart);
+    console.log(cart.generateArray())
     res.render('cart', {csrfToken: req.csrfToken(),products: cart.generateArray(), totalPrice: cart.totalPrice}); 
-  //res.render('cart'); 
+   
 }
 
 //POST /addToCart/:id
@@ -208,8 +209,9 @@ exports.addToCart = async(req,res) =>{
         MenuItem.findById(productId,function(err,product){           
            if (err) {
                return res.redirect('/menu',{csrfToken: req.csrfToken()});
-           }                         
-               cart.add(product,product.id);           
+           }        
+               let qty = req.body.qty;                 
+               cart.add(product,product.id,qty);           
                req.session.cart = cart;           
                            
            })       
@@ -233,10 +235,18 @@ exports.addToCart = async(req,res) =>{
     } 
 }
 
+//GET /reduce/:id
+exports.reduceItem = async(req,res)=>{
+    let productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.reduceByOne(productId);
+    req.session.cart = cart;
+    res.redirect('/cart');
+}
+
 
 //GET /about
-exports.about = async(req,res)=>{    
- 
+exports.about = async(req,res)=>{     
            res.render('about');             
    
 }

@@ -23,6 +23,7 @@ router.get('/editMenu',pizzaController.editMenu);
 router.post('/submitMenuItem',pizzaController.submitMenuItem);
 router.get('/cart',pizzaController.cart);
 router.post('/addToCart/:id/:name/:price',pizzaController.addToCart);
+router.get('/reduce/:id',pizzaController.reduceItem);
 router.get('/about', pizzaController.about);
 router.get('/checkout', checkOutController.checkout);
 router.get('/signup', userController.signup);
@@ -32,6 +33,7 @@ router.post('/signin',notLoggedIn,userController.signinSubmit);
 router.get('/profile',isLoggedIn,userController.profile);
 router.get('/logout',isLoggedIn,userController.logout);
 router.post('/checkout',isLoggedIn,ordersController.checkout)
+
 
 module.exports=router;
 

@@ -6,19 +6,27 @@ Shopping Basket
             <ul class="list-group">
                 <% products.forEach(function(products){ %>
                     <li class="list-group-item">
-                        <span class="badge bg-secondary"><%=products.qty%></span>
-                        <strong><%=products.item.name%></strong>                        
-                        <span class="badge bg-success">£<%=products.price%></span>                       
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Action
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="Action">
-                              <a class="dropdown-item" href="#">Remove</a>
-                              <a class="dropdown-item" href="#">Increase</a>
-                              <a class="dropdown-item" href="#">Decrease</a>
-                            </div>
-                          </div>                                              
+                     
+                            <span class="badge bg-secondary"><%=products.qty%></span>
+                   
+                    
+                            <strong><%=products.item.name%></strong>  
+                  
+                                   
+                            <span class="badge bg-success">£<%=products.price%></span> 
+                            
+                                   
+                            <div class="dropdown">
+                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Action
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="Action">
+                                <a class="dropdown-item" href="#">Remove</a>
+                                <a class="dropdown-item" href="#">Increase</a>
+                                <a class="dropdown-item" href="/reduce/<%=products.item._id%>">Decrease</a>
+                                </div>
+                            </div>   
+                                                              
                     </li>
                 <%})%>
             </ul>

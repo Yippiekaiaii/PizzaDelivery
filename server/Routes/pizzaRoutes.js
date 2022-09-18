@@ -24,6 +24,8 @@ router.post('/submitMenuItem',pizzaController.submitMenuItem);
 router.get('/cart',pizzaController.cart);
 router.post('/addToCart/:id/:name/:price',pizzaController.addToCart);
 router.get('/reduce/:id',pizzaController.reduceItem);
+router.get('/deleteItem/:id',pizzaController.deleteItem);
+router.get('/increaseItem/:id',pizzaController.increaseItem);
 router.get('/about', pizzaController.about);
 router.get('/checkout', checkOutController.checkout);
 router.get('/signup', userController.signup);

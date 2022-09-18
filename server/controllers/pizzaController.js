@@ -180,12 +180,12 @@ exports.cart = async(req,res)=>{
     if (!req.session.cart){       
            res.render('cart', {csrfToken: req.csrfToken(),products:null});
             console.log("No cart found");       
-    } 
+    } else {
     let cart = new Cart(req.session.cart);
     //console.log(cart);
-    console.log(cart.generateArray())
+    //console.log(cart.generateArray())
     res.render('cart', {csrfToken: req.csrfToken(),products: cart.generateArray(), totalPrice: cart.totalPrice}); 
-   
+    }
 }
 
 //POST /addToCart/:id
@@ -240,6 +240,24 @@ exports.reduceItem = async(req,res)=>{
     let productId = req.params.id;
     let cart = new Cart(req.session.cart ? req.session.cart : {});
     cart.reduceByOne(productId);
+    req.session.cart = cart;
+    res.redirect('/cart');
+}
+
+//GET /increaseItem/:id
+exports.increaseItem = async(req,res)=>{
+    let productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.increaseByOne(productId);
+    req.session.cart = cart;
+    res.redirect('/cart');
+}
+
+//GET /deleteItem/:id
+exports.deleteItem = async(req,res)=>{
+    let productId = req.params.id;
+    let cart = new Cart(req.session.cart ? req.session.cart : {});
+    cart.deleteItem(productId);
     req.session.cart = cart;
     res.redirect('/cart');
 }

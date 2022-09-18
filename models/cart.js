@@ -14,21 +14,31 @@ module.exports = function Cart(oldCart) {
         }
 
         //after the above check increase the quantity of the items that have been added and increase the price 
-        storedItem.qty = storedItem.qty + qty;
+        let newqty = parseFloat(qty);       
+        storedItem.qty = storedItem.qty + newqty;
         storedItem.price = storedItem.item.price * storedItem.qty;
-        this.totalQty = this.totalQty + qty;
-        this.totalPrice += (storedItem.item.price * qty);
+        this.totalQty = this.totalQty + newqty;
+        this.totalPrice += (storedItem.item.price * newqty);       
     }
 
         //function to remove an item from the cart
     this.reduceByOne = function(id){
-        console.log(id);
-        console.log(this.items[id].qty);
-        console.log(this.items[id].price);
         this.items[id].qty = this.items[id].qty -1;
         this.items[id].price = this.items[id].price - this.items[id].item.price;
         this.totalQty--;
-        this.totalPrice -= this.items[id].item.price;        
+        this.totalPrice -= this.items[id].item.price; 
+        
+        if (this.items[id].qty <=0){
+            delete this.items[id];
+        }
+    };
+
+    this.increaseByOne = function(id){     
+        this.items[id].qty = this.items[id].qty +1;        
+        this.items[id].price = this.items[id].price + this.items[id].item.price;        
+        this.totalQty++;
+        this.totalPrice += this.items[id].item.price; 
+       
     };
 
     this.generateArray = function() {
@@ -40,6 +50,11 @@ module.exports = function Cart(oldCart) {
         return arr;
     };
 
+    this.deleteItem = function(id){
+        this.totalQty-= this.items[id].qty;
+        this.totalPrice -= this.items[id].price; 
+        delete this.items[id];
+    };
 
 
 };

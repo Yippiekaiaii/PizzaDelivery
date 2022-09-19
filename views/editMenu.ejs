@@ -66,9 +66,14 @@
         <div class="col-4">
             Image
         </div>
-        <div class="col-4">           
+        <div class="col-4">          
+
             <button class="btn btn-primary mt-2">Edit</button>
-            <button class="btn btn-primary mt-2">Delete</button>
+
+            <form action="/deleteMenuItem/<%=menuItems._id %>" enctype="multipart/form-data" method="POST">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                <button type="Delete" class="btn btn-primary mt-2">Delete</button>
+            </form> 
         </div>
     <% })%>
 

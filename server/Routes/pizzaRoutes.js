@@ -34,8 +34,8 @@ router.get('/signin', notLoggedIn,userController.signin);
 router.post('/signin',notLoggedIn,userController.signinSubmit);
 router.get('/profile',isLoggedIn,userController.profile);
 router.get('/logout',isLoggedIn,userController.logout);
-router.post('/checkout',isLoggedIn,ordersController.checkout)
-
+router.post('/checkout',isLoggedIn,ordersController.checkout);
+router.post('/deleteMenuItem/:id',pizzaController.deleteMenuItem);
 
 module.exports=router;
 

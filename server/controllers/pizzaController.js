@@ -174,6 +174,30 @@ exports.submitMenuItem = async (req,res)=>{
     }  
 }
 
+
+//POST /deleteMenuItem
+exports.deleteMenuItem = async(req,res)=>{
+    console.log('delete menu item');
+    const deleteID = req.params.id;
+    console.log(deleteID);
+    const checkRecord = MenuItem.findOne({_id:deleteID});
+    
+    if (!checkRecord) {
+        console.log("Record Does Not Exist");
+    } else {
+        console.log("Record Found...Proceeding to delete");
+        try{
+            await MenuItem.deleteOne({_id:deleteID});   
+            } catch (err) {
+                console.log(err);
+                res.status(500).send({message: error.message||"Error Occured"}); 
+            } 
+    }  
+    
+    res.redirect('/editMenu');
+}
+
+
 //GET /cart
 exports.cart = async(req,res)=>{
 

@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="row text-center">
         <h1>Administration</h1>
@@ -13,43 +15,53 @@
         <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>  
       </ul>
 
-<button class="btn btn-primary mt-2">New</button>
 
-<!--New Menu Item Start-->
-<div class="row">
-    <form action="/submitMenuItem" enctype="multipart/form-data" method="POST">
-        <div class="submitMenuItem-form">
-            <label for="name">Name</label>
-            <input required type="text" name="name" id="name" class="form-control"> 
-            
-            <label for="description">Description</label>
-            <textarea required name="description" id="description" class="form-control"> </textarea>
-
-            <select class="form-select form-control" name="category" aria-label="Category" required>
-                <option selected>Select Category</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Garlic Bread">Garlic Bread</option>
-                <option value="Sides">Sides</option>
-                <option value="Drinks">Drinks</option>
-                <option value="Misc">Misc</option>
-            </select>
- 
-            <label for="vegitarian">Vegitarian</label>
-            <input class="checkbox" type="checkbox" name="vegitarian" id="vegitarian" class="form-control"> 
-
-            <label for="vegan">Vegan</label>
-            <input class="checkbox" type="checkbox" name="vegan" id="vegan" class="form-control"> 
- 
-            <label for="price">Price</label>
-            <input required type="text" name="price" id="price" class="form-control">
-
-            <label for="image">Image</label>
-            <input required type="file" name="image" id="image" class="form-control"> 
-            <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-            <button type="submit" class="btn btn-primary mt-2">Submit</button>
-         </div>
-    </form>
-</div>
+<!--Add Menu Item-->
+<p>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      New Menu Item
+    </a>
+   
+  </p>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <h3>Add New Menu Item</h3>
+        <div class="row">
+            <form action="/submitMenuItem" enctype="multipart/form-data" method="POST">
+                <div class="submitMenuItem-form">
+                    <label for="name">Name</label>
+                    <input required type="text" name="name" id="name" class="form-control"> 
+                    
+                    <label for="description">Description</label>
+                    <textarea required name="description" id="description" class="form-control"> </textarea>
+        
+                    <select class="form-select form-control" name="category" aria-label="Category" required>
+                        <option selected>Select Category</option>
+                        <option value="Pizza">Pizza</option>
+                        <option value="Garlic Bread">Garlic Bread</option>
+                        <option value="Sides">Sides</option>
+                        <option value="Drinks">Drinks</option>
+                        <option value="Misc">Misc</option>
+                    </select>
+         
+                    <label for="vegitarian">Vegitarian</label>
+                    <input class="checkbox" type="checkbox" name="vegitarian" id="vegitarian" class="form-control"> 
+        
+                    <label for="vegan">Vegan</label>
+                    <input class="checkbox" type="checkbox" name="vegan" id="vegan" class="form-control"> 
+         
+                    <label for="price">Price</label>
+                    <input required type="text" name="price" id="price" class="form-control">
+        
+                    <label for="image">Image</label>
+                    <input required type="file" name="image" id="image" class="form-control"> 
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                 </div>
+            </form>
+        </div>
+    </div>
+  </div>
 
 <!--Menu Item List Start-->
 <h3>Current Menu Items</h3>
@@ -63,18 +75,68 @@
             <p>Vegan: <%=menuItems.vegan %></p> 
             <p>Price: <%=menuItems.price %></p> 
         </div>
-        <div class="col-4">
-            Image
+        <div class="col-2">
+            <img src="/uploads/<%=menuItems.image %>" width="150px">
         </div>
-        <div class="col-4">          
+        <div class="col-1">          
 
-            <button class="btn btn-primary mt-2">Edit</button>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                Edit
+              </button>
 
             <form action="/deleteMenuItem/<%=menuItems._id %>" enctype="multipart/form-data" method="POST">
                 <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
                 <button type="Delete" class="btn btn-primary mt-2">Delete</button>
             </form> 
         </div>
+
+        <!--Edit Menu Item Form-->
+        <div class = "col-5">
+           
+              <div style="min-height: 120px;">
+                <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                  <div class="card card-body" style="width: 300px;">
+
+                        <form action="#" enctype="multipart/form-data" method="POST">
+                            <div class="submitMenuItem-form">
+                                <label for="name">Name</label>
+                                <input required type="text" name="name" id="name" class="form-control"> 
+                                
+                                <label for="description">Description</label>
+                                <textarea required name="description" id="description" class="form-control"> </textarea>
+                    
+                                <select class="form-select form-control-sm" name="category" aria-label="Category" required>
+                                    <option selected>Select Category</option>
+                                    <option value="Pizza">Pizza</option>
+                                    <option value="Garlic Bread">Garlic Bread</option>
+                                    <option value="Sides">Sides</option>
+                                    <option value="Drinks">Drinks</option>
+                                    <option value="Misc">Misc</option>
+                                </select>
+                     
+                                <label for="vegitarian">Vegitarian</label>
+                                <input class="checkbox" type="checkbox" name="vegitarian" id="vegitarian" class="form-control"> 
+                    
+                                <label for="vegan">Vegan</label>
+                                <input class="checkbox" type="checkbox" name="vegan" id="vegan" class="form-control"> 
+                     
+                                <label for="price">Price</label>
+                                <input required type="text" name="price" id="price" class="form-control">
+                    
+                                <label for="image">Image</label>
+                                <input required type="file" name="image" id="image" class="form-control"> 
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                             </div>
+
+                        </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+
+        <hr>
     <% })%>
 
 </div>

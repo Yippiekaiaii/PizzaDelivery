@@ -1,6 +1,8 @@
 const Offer = require('../../models/offers.js');
 const MenuItem = require('../../models/menuItems');
 let Cart = require('../../models/cart');
+const fs = require('fs');
+const { Console } = require('console');
 
 
 //GET "/"
@@ -181,17 +183,47 @@ exports.deleteMenuItem = async(req,res)=>{
     const deleteID = req.params.id;
     console.log(deleteID);
     const checkRecord = MenuItem.findOne({_id:deleteID});
+
+    let menuItem = await MenuItem.findOne({_id:deleteID});  
+    let menuImageName = menuItem.image;
+    let imageFolderPath = './public/uploads/';
+    let imageFilePath = imageFolderPath + menuImageName;
+    console.log("Image Filepath = ", imageFilePath);
     
+    //Delete DB record
     if (!checkRecord) {
         console.log("Record Does Not Exist");
     } else {
         console.log("Record Found...Proceeding to delete");
         try{
-            await MenuItem.deleteOne({_id:deleteID});   
-            } catch (err) {
-                console.log(err);
-                res.status(500).send({message: error.message||"Error Occured"}); 
-            } 
+           await MenuItem.deleteOne({_id:deleteID});   
+           } catch (err) {
+               console.log(err);
+               res.status(500).send({message: error.message||"Error Occured"}); 
+           }            
+
+           //Delete image from server
+           if (!menuImageName) {
+             console.log("No image found in the database for deleted record");             
+           } else {
+                if (fs.existsSync(imageFilePath)){
+                    console.log("Image File Found - proceeding to delete")
+                    try {                    
+                        fs.unlink(imageFilePath, (err =>{
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("Image Deleted")
+                            }
+                        }));
+                       
+                    } catch (err) {
+                        console.log("error=", err.message, " Image has not been deleted");
+                    }
+                } else {
+                    console.log("Image File not found")
+                }; 
+           }
     }  
     
     res.redirect('/editMenu');

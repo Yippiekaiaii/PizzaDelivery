@@ -47,7 +47,7 @@ exports.signupSubmit =
     passport.authenticate('local.signup',{
         successRedirect: '/profile',
         failureRedirect: '/signup',
-        failureFlash: true //flashes the message set in passport.js 
+        failureFlash: true ,//flashes the message set in passport.js         
     })
 
 //GET /profile
@@ -64,10 +64,8 @@ exports.profile = async (req,res)=>{
         orderItems = cart.generateArray();
         
     });
-    console.log(orderItems);
-    res.render('user/profile',{orders:orders,csrfToken: req.csrfToken(), items:orderItems});
-    
-  
+   
+    res.render('user/profile',{orders:orders,csrfToken: req.csrfToken(), items:orderItems});    
    
 }
 

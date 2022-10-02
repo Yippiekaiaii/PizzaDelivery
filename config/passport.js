@@ -19,7 +19,7 @@ passport.deserializeUser(function(id,done){
     })
 })
 
-//sign up strategy
+//sign up strategy for creating new user
 passport.use('local.signup', new LocalStrategy ({ 
     usernameField:'email',
     passwordField:'password',    
@@ -36,9 +36,10 @@ passport.use('local.signup', new LocalStrategy ({
                 return done(null,false,{message:'email is already in use'}) //return if email already exist and passes a message to flash
             }
 
-            //If user doesn exist and no errors then create new user in mongoDB
+            //If user doesnt exist and no errors then create new user in mongoDB
             let newUser = new User();
-            newUser.email = email;   
+            newUser.email = email;             
+            newUser.access = "customer"; 
             newUser.password = newUser.encryptPassword(password); //uses method from user.js to encrypt password
             newUser.save(function(err,result){
                 if (err) {

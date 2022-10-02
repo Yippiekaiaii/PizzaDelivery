@@ -9,7 +9,8 @@ exports.checkout = async (req,res)=>{
         user: req.user,
         cart: cart,
         address: req.body.address,
-        name: req.body.name
+        name: req.body.name,
+        status: "pending"
     });
     order.save(function(err,result){
         if (err){
@@ -17,8 +18,22 @@ exports.checkout = async (req,res)=>{
             res.redirect('/');
         } else {
         req.flash('sucess','Order Placed Sussessfully');
-        res.redirect('/');
+        res.redirect('/profile');
         }        
     });
    
+}
+
+exports.deleteOrder = async (req,res) => {
+    const order = Order.findOne({_id: req.params.id});
+    //console.log("this is the order", order);
+
+    if (!order) {
+        console.log("Error - No order found to delete")
+     } else {       
+            console.log("deleting order ", req.params.id);
+            await Order.deleteOne({_id: req.params.id});   
+     }
+  
+    res.redirect('/profile');
 }

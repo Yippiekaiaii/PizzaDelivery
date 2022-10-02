@@ -159,9 +159,7 @@ exports.submitMenuItem = async (req,res)=>{
 
         await newMenuItem.save()   
         .then((result)=>{  
-            const menuItems = MenuItem.find({});  
-            //console.log(menuItems); 
-            //res.redirect('editMenu',{csrfToken: req.csrfToken(),title:'Edit Menu', menuItems});
+            const menuItems = MenuItem.find({});         
             res.redirect('/editMenu');
          })
 
@@ -226,6 +224,44 @@ exports.deleteMenuItem = async(req,res)=>{
            }
     }  
     
+    res.redirect('/editMenu');
+}
+
+//POST /editMenuItem/:id
+exports.editMenuItem = async (req,res) => {
+    const editID = req.params.id;
+    const checkMenuItem = MenuItem.findOne({_id:editID});
+    console.log("Record to edit", editID);   
+    let veganSet = false;
+    let vegiSet = false;    
+
+    if (req.body.evegan == "on"){
+        veganSet = true;
+    } else {
+        veganSet = false;
+    }
+
+    if (req.body.evegitarian == "on"){
+        vegiSet = true;
+    } else {
+        vegiSet = false;
+    }
+
+    const editFields = {
+        name: req.body.ename,
+        description: req.body.edescription,
+        price: req.body.eprice,
+        category: req.body.ecategory,
+        vegitarian: vegiSet,
+        vegan: veganSet
+    }
+
+    if (!checkMenuItem){
+        console.log("Error - item not found to update");
+    } else {
+        await MenuItem.updateOne({name:editFields.name,description:editFields.description,price:editFields.price,category:editFields.category,vegan:editFields.vegan,vegitarian:editFields.vegitarian})
+        
+    }
     res.redirect('/editMenu');
 }
 

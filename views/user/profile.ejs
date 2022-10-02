@@ -14,29 +14,54 @@
         <hr>                  
     </div>
 
-    <div class="row">
-        <h2>My Orders</h2>  
-        <% orders.forEach(function(orders){ %> 
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                <h5 class="card-title"><%=orders.name%></h5>
-                <p class="card-text"><%=orders.address%></p>
-                </div>
+    <div class="row grid">
+        <h2>My Orders</h2>         
+            <% orders.forEach(function(orders){ %> 
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title"><%=orders.name%></h5>
+                    <p><%=orders._id%></p>
+                    <p class="card-text"><%=orders.address%></p>
+                    </div>
 
-                <ul class="list-group list-group-flush">            
-                    <li class="list-group-item">Total Items: <%=orders.cart.totalQty%></li>
-                    <li class="list-group-item">Total Price: £<%=orders.cart.totalPrice%></li>
-                    <%items.forEach(function(items){%>
-                    <li class="list-group-item"><span class="badge bg-primary"><%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li>  
-                    <%})%>    
-                </ul>
+                    <ul class="list-group list-group-flush">            
+                        <li class="list-group-item">Total Items: <%=orders.cart.totalQty%></li>
+                        <li class="list-group-item">Total Price: £<%=orders.cart.totalPrice%></li>
+                        <li class="list-group-item">Status: <%=orders.status%></li>
+                        <%items.forEach(function(items){%>
+                        <li class="list-group-item"><span class="badge bg-primary"><%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li>  
+                        <%})%>    
+                    </ul>
 
-                <div class="card-body">
-                <a href="#" class="card-link">Cancel Order</a>
-                <a href="#" class="card-link">Amend Order</a>
+                    <div class="card-body">                
+
+                    <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orders._id%>">Cancel</button>
+                
+                    </div>
                 </div>
-            </div>
-        <%})%>
+            <%})%>
+        
     </div>
 </div>
+
+<script>
+
+    //Cancel Order Confirmation
+
+    //set delegated event listener up for container div that will listen for any click events within it
+    const btn = document.querySelector(".grid").addEventListener("click",(e)=>{ 
+        if (e.target.localName !== "button") return; //if the click is not a button exit the function
+
+        //If the click is a button set the id from the dataset 
+        const deleteID = e.target.dataset.id;      
+
+        //Pop up for are you sure - if yes then delete the record
+        if (confirm("Are you sure?")) {  
+        let fetchString = "/deleteOrder/" + deleteID
+        fetch(fetchString, {method:'GET'});
+        location.reload();     //Reload the current page 
+        }    
+    });   
+ 
+</script>

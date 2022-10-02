@@ -36,6 +36,8 @@ router.get('/profile',isLoggedIn,userController.profile);
 router.get('/logout',isLoggedIn,userController.logout);
 router.post('/checkout',isLoggedIn,ordersController.checkout);
 router.post('/deleteMenuItem/:id',pizzaController.deleteMenuItem);
+router.post('/editMenuItem/:id', pizzaController.editMenuItem);
+router.get('/deleteOrder/:id',ordersController.deleteOrder);
 
 module.exports=router;
 

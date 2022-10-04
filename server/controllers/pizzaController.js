@@ -1,5 +1,6 @@
 const Offer = require('../../models/offers.js');
 const MenuItem = require('../../models/menuItems');
+const Orders = require('../../models/order.js')
 let Cart = require('../../models/cart');
 const fs = require('fs');
 const { Console } = require('console');
@@ -354,10 +355,26 @@ exports.deleteItem = async(req,res)=>{
     res.redirect('/cart');
 }
 
-
 //GET /about
 exports.about = async(req,res)=>{     
            res.render('about');             
    
+}
+
+//GET /orders
+exports.orders = async(req,res)=>{
+        const orderItems = await Orders.find({});
+        res.render('orders',{orderItems});
+}
+
+//POST /changeStatus/:id
+exports.changeStatus = async(req,res)=>{
+        let getID = req.params.id; 
+        if (!getID){
+            console.log('error no ID')
+        } else {
+        await Orders.updateOne({status:req.params.status});
+        }
+        res.redirect('/orders');
 }
 

@@ -1,0 +1,81 @@
+
+
+<div class="row text-center">
+    <h1>Administration</h1>
+    <p>Orders</p>
+</div>
+<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+  </a>
+
+  <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+    <li><a href="/orders" class="nav-link px-2 link-secondary">Orders</a></li>
+    <li><a href="/offerlist" class="nav-link px-2 link-dark">Offers</a></li>
+    <li><a href="/admin" class="nav-link px-2 link-dark">New Offer</a></li>
+    <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>  
+  </ul>
+
+<div class="row grid">
+    <h2>Current Orders</h2>
+
+    <div class="accordion" id="accordionExample">
+      <%var a= 1%>
+      <%orderItems.forEach(function(orderItems){ %>
+        
+            <div class="col-12">              
+              <span class="badge bg-primary"><%=a%></span> Order ID <%=orderItems._id %>
+              <%=orderItems.user.email%>              
+              <%=orderItems.name%> 
+              <%=orderItems.status%>  
+              <%=orderItems.cart%>   
+
+              <select name="status" id="status" selected="<%=orderItems.status%>">
+                <option value = "pending">Pending</option>
+                <option value = "confirmed">Confirmed</option>
+                <option value = "cooking">Cooking</option>
+                <option value = "fordelivery">Out for Delivery</option>
+                <option value = "onway">On Its Way</option>
+                <option value = "delivered">Delivered</option>
+              </select>
+
+              <form action="/changeStatus/<%=orderItems._id %>" method="POST">  
+                  <button>Update</button>
+              </form>
+
+              <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orderItems._id%>">Cancel</button>
+             
+            <%a=a+1%>
+            </div>
+      
+      <% }) %>   
+
+
+    </div>
+
+
+</div>
+
+<script>
+ //Cancel Order Confirmation
+
+    //set delegated event listener up for container div that will listen for any click events within it
+    const btn = document.querySelector(".grid").addEventListener("click",(e)=>{ 
+        if (e.target.localName !== "button") return; //if the click is not a button exit the function
+
+        //If the click is a button set the id from the dataset 
+        const deleteID = e.target.dataset.id;      
+
+        //Pop up for are you sure - if yes then delete the record
+        if (confirm("Are you sure?")) {  
+        let fetchString = "/deleteOrder/" + deleteID
+        fetch(fetchString, {method:'GET'});
+        location.reload();     //Reload the current page 
+        }    
+    });   
+
+</script>
+
+
+
+
+

@@ -38,6 +38,8 @@ router.post('/checkout',isLoggedIn,ordersController.checkout);
 router.post('/deleteMenuItem/:id',pizzaController.deleteMenuItem);
 router.post('/editMenuItem/:id', pizzaController.editMenuItem);
 router.get('/deleteOrder/:id',ordersController.deleteOrder);
+router.get('/orders',isLoggedIn,pizzaController.orders);
+router.post('/changeStatus/:id',isLoggedIn,pizzaController.changeStatus);
 
 module.exports=router;
 

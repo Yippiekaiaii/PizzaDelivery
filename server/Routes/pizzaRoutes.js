@@ -45,23 +45,17 @@ module.exports=router;
 
 
 //Function to protect a route if the user is not logged in
-function isLoggedIn(req,res,next){
-    console.log('Verify logged in status...')
-    if (req.isAuthenticated()) {
-        console.log('user is logged in');
+function isLoggedIn(req,res,next){    
+    if (req.isAuthenticated()) {      
         return next();
-    }
-    console.log('user is NOT logged in - redirecting to home')
+    }  
     res.redirect('/');
 }
 
 //Function to protect a route if the user IS logged in
-function notLoggedIn(req,res,next){
-    console.log('Verify logged Out status...')
+function notLoggedIn(req,res,next){  
     if (!req.isAuthenticated()) {
-        console.log('user is NOT logged in');
-        return next();
-    }
-    console.log('user is logged in - redirecting')
+       return next();
+    }    
     res.redirect('/');
 }

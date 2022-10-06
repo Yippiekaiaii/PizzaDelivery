@@ -4,6 +4,7 @@ const Orders = require('../../models/order.js')
 let Cart = require('../../models/cart');
 const fs = require('fs');
 const { Console } = require('console');
+const { getDiffieHellman } = require('crypto');
 
 
 //GET "/"
@@ -364,16 +365,17 @@ exports.about = async(req,res)=>{
 //GET /orders
 exports.orders = async(req,res)=>{
         const orderItems = await Orders.find({});
-        res.render('orders',{orderItems});
+        res.render('orders',{orderItems,csrfToken: req.csrfToken()});
 }
 
 //POST /changeStatus/:id
 exports.changeStatus = async(req,res)=>{
-        let getID = req.params.id; 
-        if (!getID){
+        let getID = req.params.id;       
+        let findRecord = await Orders.findOne({_id:getID});           
+        if (!findRecord){
             console.log('error no ID')
         } else {
-        await Orders.updateOne({status:req.params.status});
+        await Orders.updateOne({_id:getID},{$set:{status:req.body.status}});        
         }
         res.redirect('/orders');
 }

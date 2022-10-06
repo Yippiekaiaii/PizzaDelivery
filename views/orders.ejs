@@ -27,23 +27,29 @@
               <%=orderItems.user.email%>              
               <%=orderItems.name%> 
               <%=orderItems.status%>  
-              <%=orderItems.cart%>   
+              <%=orderItems.cart%>                
 
-              <select name="status" id="status" selected="<%=orderItems.status%>">
-                <option value = "pending">Pending</option>
-                <option value = "confirmed">Confirmed</option>
-                <option value = "cooking">Cooking</option>
-                <option value = "fordelivery">Out for Delivery</option>
-                <option value = "onway">On Its Way</option>
-                <option value = "delivered">Delivered</option>
-              </select>
+              <form action="/changeStatus/<%=orderItems._id %>" method="POST"> 
 
-              <form action="/changeStatus/<%=orderItems._id %>" method="POST">  
-                  <button>Update</button>
+                  <select name="status" id="status">
+                    <% 
+                      //Select the current status to show in the drop down
+                      let options = ["pending","confirmed","cooking","fordelivery","onway","delivered"];
+                      for (let i=0; i < options.length; i++)
+                      {
+                        let selected = (orderItems.status == options[i]) ? "selected" : "";
+                        console.log(orderItems.status, options[i]);
+                        %><option value="<%=options[i]%>" <%=selected%>><%=options[i]%></option><%
+                      }
+                    %> 
+                  </select>
+
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                  <button id="update-btn" type="submit">Update</button>
               </form>
 
               <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orderItems._id%>">Cancel</button>
-             
+        
             <%a=a+1%>
             </div>
       
@@ -56,11 +62,12 @@
 </div>
 
 <script>
+
  //Cancel Order Confirmation
 
     //set delegated event listener up for container div that will listen for any click events within it
-    const btn = document.querySelector(".grid").addEventListener("click",(e)=>{ 
-        if (e.target.localName !== "button") return; //if the click is not a button exit the function
+        const btn = document.querySelector(".grid").addEventListener("click",(e)=>{ 
+        if (e.target.localName !== "button" || e.target.id =="update-btn") return; //if the click is not a button exit the function
 
         //If the click is a button set the id from the dataset 
         const deleteID = e.target.dataset.id;      
@@ -71,7 +78,8 @@
         fetch(fetchString, {method:'GET'});
         location.reload();     //Reload the current page 
         }    
-    });   
+    });     
+    
 
 </script>
 

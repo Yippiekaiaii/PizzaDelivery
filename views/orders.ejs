@@ -20,16 +20,17 @@
 
     <div class="accordion" id="accordionExample">
       <%var a= 1%>
-      <%orderItems.forEach(function(orderItems){ %>
+      <%orders.forEach(function(orders){ %>
         
             <div class="col-12">              
-              <span class="badge bg-primary"><%=a%></span> Order ID <%=orderItems._id %>
-              <%=orderItems.user.email%>              
-              <%=orderItems.name%> 
-              <%=orderItems.status%>  
-              <%=orderItems.cart%>                
+              <span class="badge bg-primary"><%=a%></span> Order ID <%=orders._id %>
+              <%=orders.user.email%>              
+              <%=orders.name%> 
+              <%=orders.status%>  
+              <%=orders.cart%>                          
+              
 
-              <form action="/changeStatus/<%=orderItems._id %>" method="POST"> 
+              <form action="/changeStatus/<%=orders._id %>" method="POST"> 
 
                   <select name="status" id="status">
                     <% 
@@ -37,8 +38,8 @@
                       let options = ["pending","confirmed","cooking","fordelivery","onway","delivered"];
                       for (let i=0; i < options.length; i++)
                       {
-                        let selected = (orderItems.status == options[i]) ? "selected" : "";
-                        console.log(orderItems.status, options[i]);
+                        let selected = (orders.status == options[i]) ? "selected" : ""; //simplfied syntax for if statement
+                        //console.log(orderItems.status, options[i]);
                         %><option value="<%=options[i]%>" <%=selected%>><%=options[i]%></option><%
                       }
                     %> 
@@ -48,12 +49,20 @@
                   <button id="update-btn" type="submit">Update</button>
               </form>
 
-              <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orderItems._id%>">Cancel</button>
+              <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orders._id%>">Cancel</button>
         
             <%a=a+1%>
-            </div>
+            </div>           
+            
+            <ul>        
+              <%items.forEach(function(items){ %>       
+                <%//if(items._id == orders._id){ %>
+                  <li class="list-group-item"><span class="badge bg-primary"><%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li> 
+                <%//}%>
+                <%})%>  
+            </ul>
       
-      <% }) %>   
+      <%})%>   
 
 
     </div>

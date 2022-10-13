@@ -12,18 +12,20 @@
             </div>
         </div>
      
-        <h2>Current Offers!</h2>
+        <h2 class = "mb-3">Current Offers!</h2>
         <div class="row">
                 
                 <% offers.forEach(function(offer){ %>
-                    <div class="col-6">
+                    <div class="col-sm-12 col-md-3 mb-3">
+                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" class = "shadow-lg img-fluid offerImage" loading="lazy" height="150px">  
+                    </div>
+
+                    <div class="col-sm-12 col-md-9 mb-3">
                         <h2 class="strapline"><%=offer.strapline%></h2>
                         <h3><%=offer.message%></h3> 
-                        <p>Offer valid until:<%=offer.expirey%></p>
+                        <p>Offer valid until: <%=offer.expirey%></p>
                     </div>
-                    <div class="col-6">
-                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg" height="300px">  
-                    </div>
+                   
                 <% })%>
                 
         </div>

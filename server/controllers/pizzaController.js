@@ -364,8 +364,18 @@ exports.about = async(req,res)=>{
 
 //GET /orders
 exports.orders = async(req,res)=>{
-        const orderItems = await Orders.find({});
-        res.render('orders',{orderItems,csrfToken: req.csrfToken()});
+    const orders = await Orders.find({});
+
+    let cart;
+    let orderItems;
+    orders.forEach(function(order){            
+        cart = new Cart(order.cart);          
+        orderItems = cart.generateArray();    
+        //console.log(orderItems);   
+    });
+    console.log(orderItems);  
+
+    res.render('orders',{orders,csrfToken: req.csrfToken(),items:orderItems});   
 }
 
 //POST /changeStatus/:id

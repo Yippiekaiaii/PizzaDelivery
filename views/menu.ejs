@@ -11,12 +11,14 @@
 
     <h3>Pizzas</h3>
     <hr>
+    
     <div class="row">
         
         <% menuItemsPizza.forEach(function(menuItemsPizza){ %>                
-                <h4><%=menuItemsPizza.name %></h4>           
-            <div class="col-6">
-                <p><%=menuItemsPizza.description %></p>
+            <h4><%=menuItemsPizza.name %></h4>
+                           
+            <div class="col-7 col-sm-4 col-md-6 col-lg-6">            
+                <p><%=menuItemsPizza.description %>
 
                 <% if (menuItemsPizza.vegan == true) { %>
                 <img src="/img/veganicon.png" class="vegicon" alt="Vegan">                
@@ -25,19 +27,23 @@
                 <% if (menuItemsPizza.vegitarian == true) { %>
                 <img src="/img/vegicon.png" class="vegicon" alt="Vegitarian">              
                 <% } %>
+                </p>
             </div>
-            <div class="col-2">
-                <p>£<%=menuItemsPizza.price %></p>               
+
+            <div class="col-1 col-sm-1 col-md-1 col-lg-1">
+                <span>£<%=menuItemsPizza.price %></span>               
             </div>
-            <div class="col-2">
-                <img src="/uploads/<%=menuItemsPizza.image %>" alt="<%=menuItemsPizza.name %>" width="150px">
+
+            <div class="col-2 col-sm-4 col-md-2 col-lg-3">
+                <img src="/uploads/<%=menuItemsPizza.image %>" alt="<%=menuItemsPizza.name %>" width="150px" class="img-fluid">
             </div>
-            <div class="col-2">
+
+            <div class="col-2 col-sm-3 col-md-3 col-lg-2">
                 <form action="/addToCart/<%=menuItemsPizza.id %>/<%=menuItemsPizza.name %>/<%=menuItemsPizza.price %>" method="POST">   
                     <label for="qty">Qty</label>
-                    <input type="text" name="qty" id="qty" style="width: 4rem;">
+                    <input type="text" name="qty" id="qty" style="width: 30px;" class="mb-1">
                     <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-                    <button class="btn btn-primary mt-2">Add</button>
+                    <button class="btn btn-primary" style ="height: 35px;">Add</button>
                 </form>                
             </div> 
         <% }) %>

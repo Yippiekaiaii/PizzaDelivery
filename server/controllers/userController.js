@@ -61,8 +61,7 @@ exports.profile = async (req,res)=>{
     let orderItems;
     orders.forEach(function(orders){
         cart = new Cart(orders.cart);
-        orderItems = cart.generateArray();
-        
+        orderItems = cart.generateArray();        
     });
    
     res.render('user/profile',{orders:orders,csrfToken: req.csrfToken(), items:orderItems});    

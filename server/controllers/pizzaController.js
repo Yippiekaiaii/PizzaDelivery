@@ -373,7 +373,7 @@ exports.orders = async(req,res)=>{
         orderItems = cart.generateArray();    
         //console.log(orderItems);   
     });
-    console.log(orderItems);  
+    //console.log(orderItems);  
 
     res.render('orders',{orders,csrfToken: req.csrfToken(),items:orderItems});   
 }

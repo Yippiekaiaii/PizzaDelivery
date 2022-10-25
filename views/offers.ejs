@@ -18,19 +18,19 @@
       
     <div class="row" >
             <% offers.forEach(function(offer){ %>               
-                    <div class="col-6">
+                    <div class="col-6 mt-3">
                         <p class="strapline"><%=offer.strapline%></p>
                         <p><%=offer.message%></p> 
-                        <p><%=offer.expirey%></p>
+                        <p><%=offer.expirey.toLocaleDateString()%></p>
                     </div>
-                    <div class="col-4">
-                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg" height="100px">  
+                    <div class="col-3 mt-4">
+                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg img-fluid" height="100px">  
                     </div>
-                    <div class="col-2">
-                         <button class="btn btn-primary mt-2">Edit</button>
+                    <div class="col-3 mt-3">
+                         <button class="btn btn-primary mt-2" style="width:60px;">Edit</button>
                         <form action="/deleteOffer/<%= offer.id %>" enctype="multipart/form-data" method="POST">
                             <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-                            <button type="Delete" class="btn btn-primary mt-2">Delete</button>
+                            <button type="Delete" class="btn btn-primary mt-2" style="width:60px;">Delete</button>
                         </form>
                     </div>
             <% })%>

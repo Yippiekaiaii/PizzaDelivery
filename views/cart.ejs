@@ -1,53 +1,55 @@
-Shopping Basket
+<div class="container">
 
-<%if(products){%> 
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <ul class="list-group">
-                <% products.forEach(function(products){ %>
-                    <li class="list-group-item">
-                     
-                            <span class="badge bg-secondary"><%=products.qty%></span>
-                   
-                    
-                            <strong><%=products.item.name%></strong>  
-                  
-                                   
-                            <span class="badge bg-success">£<%=products.price%></span> 
-                            
-                                   
-                            <div class="dropdown">
-                                <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Action
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="Action">
-                                <a class="dropdown-item" href="/deleteItem/<%=products.item._id%>">Remove</a>
-                                <a class="dropdown-item" href="/increaseItem/<%=products.item._id%>">Increase</a>
-                                <a class="dropdown-item" href="/reduce/<%=products.item._id%>">Decrease</a>
-                                </div>
-                            </div>   
-                                                              
-                    </li>
-                <%})%>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-            <strong>Total: <%=totalPrice%></strong>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-           <a href="/checkout" type="button" class="btn btn-success">Check Out</a>
-        </div>
-    </div>
+        <div class="row">     
+                <h4>Shopping Basket</h4>
+         
+                <%if(products){%> 
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                            <ul class="list-group">
+                                <% products.forEach(function(products){ %>
+                                    <li class="list-group-item">                     
+                                            <span class="badge bg-secondary"><%=products.qty%></span>                 
+                                    
+                                            <strong><%=products.item.name%></strong>                   
+                                                
+                                            <span class="badge bg-success">£<%=products.price.toFixed(2) %></span>                            
+                                                
+                                            <span class="dropdown">
+                                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="Action">
+                                                <a class="dropdown-item" href="/deleteItem/<%=products.item._id%>">Remove</a>
+                                                <a class="dropdown-item" href="/increaseItem/<%=products.item._id%>">Increase</a>
+                                                <a class="dropdown-item" href="/reduce/<%=products.item._id%>">Decrease</a>
+                                                </div>
+                                            </span>                                                                               
+                                    </li>
+                                <%})%>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                            <strong>Total Price: £<%=totalPrice.toFixed(2) %></strong>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                        <a href="/checkout" type="button" class="btn btn-success">Check Out</a>
+                        </div>
+                    </div>
 
-<%} else {%> 
-<div class="row">
-    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-       <h2>No Items in Cart</h2>
-    </div>
+                <%} else {%> 
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+                    <h2>No Items in Cart</h2>
+                    </div>
+                </div>
+                <%}%>         
+
+        </div>
+
 </div>
-<%}%> 

@@ -17,53 +17,53 @@
 
 <div class="row grid">
     <h2>Current Orders</h2>
-
-    <div class="accordion" id="accordionExample">
+    <hr>
+    <div class="row" id="accordionExample">
       <%var a= 1%>
       <%orders.forEach(function(orders){ %>
         
-            <div class="col-12">              
-              <span class="badge bg-primary"><%=a%></span> Order ID <%=orders._id %>
-              <%=orders.user.email%>              
-              <%=orders.name%> 
-              <%=orders.status%>  
-              <%=orders.cart%>                          
+            <div class="col-6">              
+              <span class="badge bg-primary"><%=a%></span> Order ID: <%=orders._id %>
+              <%=orders.user.email%>         
+              <%=orders.name%>          
+              <%=orders.cart%>                       
               
+            </div> 
+
+            <div class="col-6">
 
               <form action="/changeStatus/<%=orders._id %>" method="POST"> 
-
-                  <select name="status" id="status">
+                  <select name="status" id="status" class="btn btn-secondary" style = "width: 150px;">
                     <% 
                       //Select the current status to show in the drop down
                       let options = ["pending","confirmed","cooking","fordelivery","onway","delivered"];
                       for (let i=0; i < options.length; i++)
                       {
-                        let selected = (orders.status == options[i]) ? "selected" : ""; //simplfied syntax for if statement
-                        //console.log(orderItems.status, options[i]);
+                        let selected = (orders.status == options[i]) ? "selected" : ""; //simplfied syntax for if statement                        
                         %><option value="<%=options[i]%>" <%=selected%>><%=options[i]%></option><%
                       }
                     %> 
                   </select>
 
                   <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-                  <button id="update-btn" type="submit">Update</button>
-              </form>
+                  <button id="update-btn" type="submit" class="btn btn-secondary">Update</button>
+                  <button class="deleteOrderbtn btn btn-secondary" id="deleteOrderbtn" data-id="<%=orders._id%>">Cancel</button>
+              </form>  
 
-              <button class="deleteOrderbtn" id="deleteOrderbtn" data-id="<%=orders._id%>">Cancel</button>
-        
-            <%a=a+1%>
-            </div>           
+              <%a=a+1%>            
+            </div>
+                     
             
             <ul>        
               <%items.forEach(function(items){ %>       
                 <%//if(items._id == orders._id){ %>
-                  <li class="list-group-item"><span class="badge bg-primary"><%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li> 
+                  <li class="list-group-item"><span class="badge bg-secondary">   <%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li> 
                 <%//}%>
-                <%})%>  
+              <%})%>  
             </ul>
-      
+            <hr>
       <%})%>   
-
+     
 
     </div>
 

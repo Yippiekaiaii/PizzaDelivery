@@ -18,6 +18,7 @@ exports.checkout = async (req,res)=>{
             res.redirect('/');
         } else {
         req.flash('sucess','Order Placed Sussessfully');
+        req.session.cart = {};
         res.redirect('/profile');
         }        
     });

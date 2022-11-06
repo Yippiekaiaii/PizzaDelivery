@@ -5,7 +5,7 @@ let Cart = require('../../models/cart');
 const fs = require('fs');
 const { Console } = require('console');
 const { getDiffieHellman } = require('crypto');
-
+const nodemailer = require('nodemailer');
 
 //GET "/"
 exports.homepage = async (req,res)=>{
@@ -106,7 +106,7 @@ exports.menu = async (req,res) => {
 //GET editMenu
 exports.editMenu = async (req,res) => {
     try{
-        const menuItems = await MenuItem.find({});   
+        const menuItems = await MenuItem.find({}).sort({category:'-1'});   //-1 = sort descending
         res.render('editMenu',{title:'Edit Menu', menuItems,csrfToken: req.csrfToken()});
     }  catch (error){
         console.log(error);
@@ -364,16 +364,14 @@ exports.about = async(req,res)=>{
 
 //GET /orders
 exports.orders = async(req,res)=>{
-    const orders = await Orders.find({});
+    const orders = await Orders.find({status:{$ne:'delivered'}});
 
     let cart;
     let orderItems;
     orders.forEach(function(order){            
         cart = new Cart(order.cart);          
-        orderItems = cart.generateArray();    
-        //console.log(orderItems);   
+        orderItems = cart.generateArray();  
     });
-    //console.log(orderItems);  
 
     res.render('orders',{orders,csrfToken: req.csrfToken(),items:orderItems});   
 }
@@ -388,5 +386,45 @@ exports.changeStatus = async(req,res)=>{
         await Orders.updateOne({_id:getID},{$set:{status:req.body.status}});        
         }
         res.redirect('/orders');
+}
+
+//GET /contact
+exports.contact = async(req,res)=>{
+
+    res.render('contact',{csrfToken: req.csrfToken()});
+
+}
+
+//POST /sendEmail
+exports.sendEmail = async(req,res)=>{
+
+    const senderEmail = req.body.email;
+    const message = req.body.message;
+
+    //Set nodemailer
+    let transporter = nodemailer.createTransport({
+        service:"hotmail",
+        auth:{
+            user:"peter.wilson12@hotmail.co.uk",  
+            pass:"hollyems1" 
+        }
+    });
+
+    const options = {
+        from:"peter.wilson12@hotmail.co.uk",
+        to:"peter.wilson12@hotmail.co.uk",
+        subject:"Contact Email from PizzaDelivery profile site",
+        text: "A contact request was sent from: " + senderEmail + " Message read:  " + message
+    };
+
+    transporter.sendMail(options, function(err,info){
+        if (err){
+            console.log(err);
+            return;
+        }
+        console.log("Sent ",info.response);
+        return;
+    })
+
 }
 

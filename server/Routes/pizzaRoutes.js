@@ -32,7 +32,7 @@ router.get('/signup', userController.signup);
 router.post('/signup', userController.signupSubmit);
 router.get('/signin', notLoggedIn,userController.signin);
 router.post('/signin',notLoggedIn,userController.signinSubmit);
-router.get('/profile',isLoggedIn,userController.profile);
+router.get('/profile',isLoggedIn,isAdmin,userController.profile);
 router.get('/logout',isLoggedIn,userController.logout);
 router.post('/checkout',isLoggedIn,ordersController.checkout);
 router.post('/deleteMenuItem/:id',pizzaController.deleteMenuItem);
@@ -40,6 +40,8 @@ router.post('/editMenuItem/:id', pizzaController.editMenuItem);
 router.get('/deleteOrder/:id',ordersController.deleteOrder);
 router.get('/orders',isLoggedIn,pizzaController.orders);
 router.post('/changeStatus/:id',isLoggedIn,pizzaController.changeStatus);
+router.get('/contact',pizzaController.contact);
+router.post('/sendEmail',pizzaController.sendEmail);
 
 module.exports=router;
 
@@ -58,4 +60,13 @@ function notLoggedIn(req,res,next){
        return next();
     }    
     res.redirect('/');
+}
+
+//Function to forward direct to admin pages if profile is accessed when logging in as Admin
+function isAdmin(req,res,next){   
+    if (req.user.email == "admin@petespizzas.com"){
+       res.redirect('/orders');
+    } else {
+        return next();
+    }    
 }

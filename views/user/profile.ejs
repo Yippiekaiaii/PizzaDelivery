@@ -1,7 +1,7 @@
 
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
-        <h1>Your Profile</h1>
+        <h1>Profile</h1>
         <hr>                  
     </div>
 
@@ -19,7 +19,7 @@
                     <img src="..." class="card-img-top" alt="...">
                     <div class="card-body">
                     <h5 class="card-title"><%=orders.name%></h5>
-                    <p><%=orders._id%></p>
+                    
                     <p class="card-text"><%=orders.address%></p>
                     </div>
 
@@ -55,7 +55,7 @@
         const deleteID = e.target.dataset.id;      
 
         //Pop up for are you sure - if yes then delete the record
-        if (confirm("Are you sure?")) {  
+        if (confirm("Are you sure you want to cancel this order?")) {  
         let fetchString = "/deleteOrder/" + deleteID
         fetch(fetchString, {method:'GET'});
         location.reload();     //Reload the current page 

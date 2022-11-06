@@ -2,6 +2,7 @@ let Cart = require('../../models/cart');
 let Order = require('../../models/order');
 
 
+//POST /checkout
 exports.checkout = async (req,res)=>{
     console.log('Checkout initiated');
     let cart = new Cart(req.session.cart);
@@ -25,9 +26,10 @@ exports.checkout = async (req,res)=>{
    
 }
 
+
+//GET /deleteorder
 exports.deleteOrder = async (req,res) => {
-    const order = Order.findOne({_id: req.params.id});
-    //console.log("this is the order", order);
+    const order = Order.findOne({_id: req.params.id});  
 
     if (!order) {
         console.log("Error - No order found to delete")

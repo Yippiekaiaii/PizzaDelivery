@@ -128,7 +128,49 @@
                 </form>                
             </div> 
         <% }) %>       
-    </div>
+        </div>
+
+
+
+        <h3 class="menu-header">Drinks</h3>
+        <hr>    
+        <div class="row">        
+        <% menuItemsDrinks.forEach(function(menuItemsDrinks){ %>                
+            <h5><%=menuItemsDrinks.name %></h5>
+                           
+            <div class="col-6 col-sm-4 col-md-6 col-lg-6">            
+                <p><%=menuItemsDrinks.description %>
+
+                <% if (menuItemsDrinks.vegan == true) { %>
+                <img src="/img/veganicon.png" class="vegicon" alt="Vegan">                
+                <% } %>
+
+                <% if (menuItemsDrinks.vegitarian == true) { %>
+                <img src="/img/vegicon.png" class="vegicon" alt="Vegitarian">              
+                <% } %>
+                </p>
+            </div>
+
+            <div class="col-2 col-sm-1 col-md-1 col-lg-1">
+                <span>£<%=menuItemsDrinks.price.toFixed(2) %></span>               
+            </div>
+
+            <div class="col-2 col-sm-4 col-md-2 col-lg-3">
+                <img src="/uploads/<%=menuItemsDrinks.image %>" alt="<%=menuItemsDrinks.name %>" width="150px" class="img-fluid">
+            </div>
+
+            <div class="col-2 col-sm-3 col-md-3 col-lg-2">
+                <form action="/addToCart/<%=menuItemsDrinks.id %>/<%=menuItemsDrinks.name %>/<%=menuItemsDrinks.price %>" method="POST">   
+                    <label for="qty" class=" d-none d-sm-inline">Qty</label>
+                    <input type="text" name="qty" id="qty" style="width: 45px;" class="mb-1">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                    <button class="btn btn-primary" style ="height: 35px;">Add</button>
+                </form>                
+            </div> 
+        <% }) %>       
+        </div>
+
+
 
 
 </div>

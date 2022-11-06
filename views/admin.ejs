@@ -15,26 +15,28 @@
     <li><a href="/editMenu" class="nav-link px-2 link-dark">Edit Menu</a></li>  
   </ul>
 
-<div class="row">
-    <h4 class="mb-4">Add New Offer</h4>
-    <form action="/submitOffer" enctype="multipart/form-data" method="POST">
-        <div class="submitOffer-form">
-           <label for="strapLine">Strap Line</label>
-           <input required type="text" name="strapline" id="strapline" class="form-control"> 
-           
-           <label for="message">Message</label>
-           <textarea required name="message" id="message" class="form-control"> </textarea>
+<div class="row d-flex justify-content-center">    
+    <div class="col-6">
+      <h4 class="mb-4">Add New Offer</h4>
+      <form action="/submitOffer" enctype="multipart/form-data" method="POST">
+          <div class="submitOffer-form">
+            <label for="strapLine">Strap Line</label>
+            <input required type="text" name="strapline" id="strapline" class="form-control"> 
+            
+            <label for="message">Message</label>
+            <textarea required name="message" id="message" class="form-control"> </textarea>
 
-           <label for="image">Image</label>
-           <input required type="file" name="image" id="image" class="form-control"> 
+            <label for="image">Image</label>
+            <input required type="file" name="image" id="image" class="form-control"> 
 
-            <label for="expirey">Expirey</label>
-           <input required type="date" name="expirey" id="expirey" class="form-control" accept="image/*">
-           <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-           <button type="submit" class="btn btn-primary mt-2">Submit</button>
-        </div>
-
-    </form>
+              <label for="expirey">Expirey</label>
+            <input required type="date" name="expirey" id="expirey" class="form-control" accept="image/*">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+          </div>
+        
+      </form>
+    </div>
 </div>
 
 

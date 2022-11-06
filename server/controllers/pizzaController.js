@@ -233,7 +233,7 @@ exports.deleteMenuItem = async(req,res)=>{
 exports.editMenuItem = async (req,res) => {
     const editID = req.params.id;
     const checkMenuItem = MenuItem.findOne({_id:editID});
-    console.log("Record to edit", editID);   
+    //console.log("Record to edit", editID);      
     let veganSet = false;
     let vegiSet = false;    
 
@@ -261,7 +261,7 @@ exports.editMenuItem = async (req,res) => {
     if (!checkMenuItem){
         console.log("Error - item not found to update");
     } else {
-        await MenuItem.updateOne({name:editFields.name,description:editFields.description,price:editFields.price,category:editFields.category,vegan:editFields.vegan,vegitarian:editFields.vegitarian})
+        await checkMenuItem.updateOne({name:editFields.name,description:editFields.description,price:editFields.price,category:editFields.category,vegan:editFields.vegan,vegitarian:editFields.vegitarian})
         
     }
     res.redirect('/editMenu');

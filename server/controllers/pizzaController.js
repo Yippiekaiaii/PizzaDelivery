@@ -428,3 +428,27 @@ exports.sendEmail = async(req,res)=>{
 
 }
 
+
+//POST editOfferItem/:id
+exports.editOfferItem = async(req,res)=>{
+    const editID = req.params.id;
+    const checkOfferItem = Offer.findOne({_id:editID});
+
+    //console.log("Record to edit", editID);    
+    
+    const editFields = {
+        strapline: req.body.estrapline,
+        message: req.body.emessage        
+    }
+
+    if (!checkOfferItem){
+        console.log("Error - item not found to update");
+    } else {
+        await checkOfferItem.updateOne({strapline:editFields.strapline, message:editFields.message})
+        
+    }
+    res.redirect('/offerlist');
+
+
+}
+

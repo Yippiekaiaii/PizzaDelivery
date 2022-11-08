@@ -16,24 +16,78 @@
       </ul>
 
       
-    <div class="row" >
-            <% offers.forEach(function(offer){ %>               
-                    <div class="col-6 mt-3">
-                        <p class="strapline"><%=offer.strapline%></p>
-                        <p><%=offer.message%></p> 
-                        <p><%=offer.expirey.toLocaleDateString()%></p>
-                    </div>
-                    <div class="col-3 mt-4">
-                        <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg img-fluid" height="100px">  
-                    </div>
-                    <div class="col-3 mt-3">
-                         <button class="btn btn-primary mt-2" style="width:60px;">Edit</button>
-                        <form action="/deleteOffer/<%= offer.id %>" enctype="multipart/form-data" method="POST">
-                            <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
-                            <button type="Delete" class="btn btn-primary mt-2" style="width:60px;">Delete</button>
-                        </form>
-                    </div>
-            <% })%>
-    </div>  
+    <div class="row offers-list">
+            <% offers.forEach(function(offer){ %>  
+                    <div class="row" >            
+                        <div class="col-6 mt-3">
+                            <p class="strapline"><%=offer.strapline%></p>
+                            <p><%=offer.message%></p> 
+                            <p><%=offer.expirey.toLocaleDateString()%></p>
+                        </div>
+                        <div class="col-3 mt-4">
+                            <img src="/uploads/<%= offer.image %>" alt="<%= offer.strapline %>" loading="lazy" class="offerImage shadow-lg img-fluid" height="100px">  
+                        </div>
+                        <div class="col-3 mt-3 offer-controls">
+                            <button class="btn btn-primary mt-2" style="width:60px;" id="edit-btn" data-id="<%=offer.id %>">Edit</button>
+                            <form action="/deleteOffer/<%= offer.id %>" enctype="multipart/form-data" method="POST">
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                                <button type="Delete" class="btn btn-primary mt-2" style="width:60px;">Delete</button>
+                            </form>
+                        </div>
+                    </div> 
 
+                    <!--Edit Form Start-->                    
+                    <div class="row possition-absolute fixed-top bg-dark bg-gradient p-4 text-white edit-form" id="<%=offer.id %>" style="display: none;">
+                        <div class="col-12 col-md-5"> 
+                            <h1>Edit Offer</h1>                    
+                            <form action="/editOfferItem/<%=offer.id %>" enctype="multipart/form-data" method="POST">
+                                <label for="estrapline">Strapline</label>
+                                <input required type="text" name="estrapline" id="estrapline" class="form-control" value="<%=offer.strapline %>"> 
+                                <label for="message">Message</label>
+                                <textarea required name="emessage" id="emessage" class="form-control"><%=offer.message %></textarea>
+                                
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>"> <!--Checks that the csrf token has been submitted correctly-->
+                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                <button type="button" id="edit-close" class="edit-close btn btn-primary mt-2">Close</button>
+                            </form>
+                        </div>
+                    </div>                   
+                     <!--Edit Form End-->
+
+            <% })%>   
+    </div>
 </div>
+
+
+<script>
+    
+    //Show Edit Menu
+    const btn = document.querySelector(".offers-list").addEventListener("click", (e)=>{   
+        if (e.target.localName !="button") return;
+    
+        if (e.target.id =="edit-btn") {         
+            const offerID = e.target.dataset.id;               
+            const editOffer= document.querySelectorAll(".edit-form");         
+                
+            editOffer.forEach((editOffer) =>{  
+                    if (editOffer.id == offerID){                            
+                        editOffer.style.display = "block"; 
+                    }  
+                })
+        }  
+    })   
+    
+    //Close edit menu form
+    const btnClose = document.querySelector(".container").addEventListener("click", (e)=>{ 
+     
+      if (e.target.localName !="button") return;    
+      if (e.target.id =="edit-close") {     
+        const offerID = e.target.dataset.id; 
+        const editOffer = document.querySelectorAll(".edit-form");
+            editOffer.forEach((editOffer) =>{
+                  editOffer.style.display = "none"; 
+            })
+      }  
+    })
+
+</script>

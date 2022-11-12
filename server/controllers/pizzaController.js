@@ -6,6 +6,7 @@ const fs = require('fs');
 const { Console } = require('console');
 const { getDiffieHellman } = require('crypto');
 const nodemailer = require('nodemailer');
+const { countDocuments } = require('../../models/offers.js');
 
 //GET "/"
 exports.homepage = async (req,res)=>{
@@ -276,8 +277,6 @@ exports.cart = async(req,res)=>{
             console.log("No cart found");       
     } else {
     let cart = new Cart(req.session.cart);
-    //console.log(cart);
-    //console.log(cart.generateArray())
     res.render('cart', {csrfToken: req.csrfToken(),products: cart.generateArray(), totalPrice: cart.totalPrice}); 
     }
 }
@@ -368,12 +367,20 @@ exports.orders = async(req,res)=>{
 
     let cart;
     let orderItems;
-    orders.forEach(function(order){            
-        cart = new Cart(order.cart);          
-        orderItems = cart.generateArray();  
+    let count = 0;
+    let productName = [];
+    orders.forEach(function(order){  
+             
+        cart = new Cart(order.cart); 
+        orderItems = cart.generateArray(); 
+        order.Items = cart.generateArray();
+        //console.log(orderItems[0].item.name);
+        productName.push(orderItems[0].item.name)
+        console.log(productName[count])
+        count=count+1;
     });
-
-    res.render('orders',{orders,csrfToken: req.csrfToken(),items:orderItems});   
+   
+    res.render('orders',{orders:orders,csrfToken: req.csrfToken(),items:orderItems});   
 }
 
 //POST /changeStatus/:id

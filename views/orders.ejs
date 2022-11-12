@@ -20,6 +20,7 @@
     <hr>
     <div class="row" id="accordionExample">
       <%var a= 1%>
+
       <%orders.forEach(function(orders){ %>
         
             <div class="col-6">              
@@ -29,7 +30,6 @@
             </div> 
 
             <div class="col-6">
-
               <form action="/changeStatus/<%=orders._id %>" method="POST"> 
                   <select name="status" id="status" class="btn btn-secondary" style = "width: 150px;">
                     <% 
@@ -47,19 +47,21 @@
                   <button id="update-btn" type="submit" class="btn btn-secondary">Update</button>
                   <button class="deleteOrderbtn btn btn-secondary" id="deleteOrderbtn" data-id="<%=orders._id%>">Cancel</button>
               </form>  
-
               <%a=a+1%>            
             </div>
                      
-            
-            <ul>        
-              <%items.forEach(function(items){ %>       
-                <%//if(items._id == orders._id){ %>
-                  <li class="list-group-item"><span class="badge bg-secondary">   <%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li> 
-                <%//}%>
-              <%})%>  
-            </ul>
-            <hr>
+            <div class="row">
+              <ul>        
+                <%items.forEach(function(items){ %>  
+                    <li class="list-group-item"><span class="badge bg-secondary">   <%=items.qty%></span> <%=items.item.name%> <span class="badge bg-secondary">£<%=items.item.price%></span></li> 
+                <%})%>
+           
+               
+              </ul>
+              <hr>
+            </div>
+
+
       <%})%>   
      
 

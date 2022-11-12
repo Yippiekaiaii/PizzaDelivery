@@ -22,7 +22,7 @@ const connectString = process.env.CONNECTIONSTRING;
 
 //Connect to mongoDB database
 mongoose.connect(connectString,{useNewUrlParser: true, useUnifiedTopology:true})
-    .then((result) => app.listen(5000), console.log('Listening on port 5000 and connected to mongodb'))
+    .then((result) => app.listen(process.env.PORT || 5000), console.log('Listening on port 5000 and connected to mongodb'))
     .catch((err) => console.log(err));
 
 require('./config/passport.js'); //run the passport setup script

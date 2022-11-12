@@ -375,7 +375,7 @@ exports.orders = async(req,res)=>{
         orderItems = cart.generateArray(); 
         order.Items = cart.generateArray();
         //console.log(orderItems[0].item.name);
-        productName.push(orderItems[0].item.name)
+        productName.push(orderItems[0].item.name)        
         console.log(productName[count])
         count=count+1;
     });

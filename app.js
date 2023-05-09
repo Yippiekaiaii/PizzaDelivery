@@ -1,5 +1,5 @@
 
-console.log("attemping to run app.js");
+console.log("attemping to run app.js")
 
 const express = require('express');
 const app = express();

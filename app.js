@@ -68,7 +68,7 @@ app.use(function(req,res,next){
 })
 
 
-//Allows access to all the different paraments from the input forms inside of our article route
+//Allows access to all the different params from the input forms inside of our route - needed for body parser
 app.use(express.urlencoded({extended:true})); 
 
 //Allows us to use express to upload the images for new offers
